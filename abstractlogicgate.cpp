@@ -52,7 +52,7 @@ void AbstractLogicGate::connect(AbstractLogicGate * const otherGate,
 
     auto gate = mConnectedGates.find(otherGate);
 
-    if(gate == mConnectedGates.end()) // not yet connected too therGate
+    if(gate == mConnectedGates.end()) // not yet connected to otherGate
     {
         set<unsigned int> inputSet;
         inputSet.insert(otherInputIndex);
@@ -64,7 +64,7 @@ void AbstractLogicGate::connect(AbstractLogicGate * const otherGate,
         gate->second.insert(otherInputIndex);
     }
 
-    evaluate(); // ?
+    evaluate(); // todo ?
 }
 
 
@@ -75,7 +75,7 @@ void AbstractLogicGate::disConnect(AbstractLogicGate * const otherGate,
 
     auto gate = mConnectedGates.find(otherGate);
 
-    if(gate == mConnectedGates.end()) // no connection found
+    if(gate == mConnectedGates.end()) // no connections to otherGate found
     {
         throw invalid_argument("AbstractLogicGate::disConnect : not connected to otherGate");
     }
@@ -89,16 +89,16 @@ void AbstractLogicGate::disConnect(AbstractLogicGate * const otherGate,
         }
         else // connected to this specific input
         {
+            otherGate->setInputState(otherInputIndex, Signal::LOW);
+
             gate->second.erase(otherInputIndex);
 
-            if(gate->second.empty())
+            if(gate->second.empty()) // remove otherGate completely if all inputs disconnected
             {
                 mConnectedGates.erase(otherGate);
             }
         }
     }
-
-    evaluate(); // ?
 }
 
 

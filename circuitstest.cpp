@@ -10,6 +10,8 @@ void CircuitsTest::testAll(void) const
 {
     testGateAND();
     testGateConnections();
+
+    cout << "All tests finished" << endl;
 }
 
 
@@ -102,9 +104,12 @@ void CircuitsTest::testGateConnections() const
 
         gateAnd1->setInputState(1, Signal::HIGH);
         cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
-
+//cout << gateAnd1->toString() << endl;
         gateAnd1->disConnect(gateAnd2, 0);
+//cout << gateAnd1->toString() << endl;
         cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+
+
 
         try
         {
@@ -133,8 +138,9 @@ void CircuitsTest::testGateConnections() const
         delete gateAnd1;
         gateAnd1 = nullptr;
         cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+cout << "xxxxxxxxx" << endl;
     }
-
+/*
     {
         GateAND * gateAnd1 = new GateAND("gateAnd1");
         GateAND * gateAnd2 = new GateAND("gateAnd2");
@@ -204,4 +210,5 @@ void CircuitsTest::testGateConnections() const
 
         // cout << gateAnd1->toString() << endl;
     }
+    */
 }
