@@ -11,7 +11,7 @@ void CircuitsTest::testAll(void) const
     testGateAND();
     testGateConnections();
 
-    cout << "All tests finished" << endl;
+    cout << "\nAll tests finished\n" << endl;
 }
 
 
@@ -20,6 +20,8 @@ void CircuitsTest::testGateAND(void) const
     cout << "     ===== CircuitsTest::testGateAND =====" << endl;
 
     {
+        cout << "     ===== 1 =====" << endl;
+
         GateAND * gateAnd = new GateAND;
 
         cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
@@ -41,6 +43,8 @@ void CircuitsTest::testGateAND(void) const
     }
 
     {
+        cout << "     ===== 2 =====" << endl;
+
         GateAND * gateAnd = new GateAND(3, "gateAnd");
 
         cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
@@ -88,6 +92,8 @@ void CircuitsTest::testGateConnections() const
     cout << "     ===== CircuitsTest::testGateConnections =====" << endl;
 
     {
+        cout << "     ===== 1 =====" << endl;
+
         GateAND * gateAnd1 = new GateAND("gateAnd1");
         GateAND * gateAnd2 = new GateAND("gateAnd2");
 
@@ -122,6 +128,8 @@ void CircuitsTest::testGateConnections() const
     }
 
     {
+        cout << "     ===== 2 =====" << endl;
+
         GateAND * gateAnd1 = new GateAND("gateAnd1");
         GateAND * gateAnd2 = new GateAND("gateAnd2");
 
@@ -138,6 +146,8 @@ void CircuitsTest::testGateConnections() const
     }
 
     {
+        cout << "     ===== 3 =====" << endl;
+
         GateAND * gateAnd1 = new GateAND("gateAnd1");
         GateAND * gateAnd2 = new GateAND("gateAnd2");
 
@@ -152,7 +162,6 @@ void CircuitsTest::testGateConnections() const
         gateAnd2 = nullptr;
 
         gateAnd1->setInputState(1, Signal::LOW);
-cout << "xxxxxxxxx" << endl;
         cout << "true" << endl;
         cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
 
@@ -161,8 +170,10 @@ cout << "xxxxxxxxx" << endl;
         gateAnd1->setInputState(1, Signal::HIGH);
         cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
     }
-    /*
+
     {
+        cout << "     ===== 4 =====" << endl;
+
         GateAND * gateAnd1 = new GateAND("gateAnd1");
         GateAND * gateAnd2 = new GateAND("gateAnd2");
         GateAND * gateAnd3 = new GateAND(4, "gateAnd3");
@@ -204,5 +215,4 @@ cout << "xxxxxxxxx" << endl;
 
         // cout << gateAnd1->toString() << endl;
     }
-    */
 }

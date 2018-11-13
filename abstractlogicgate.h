@@ -24,8 +24,6 @@ class AbstractLogicGate : public AbstractComponent
         void connect(AbstractLogicGate * const otherGate, const unsigned int otherInputIndex);
         void disConnect(AbstractLogicGate * const otherGate, const unsigned int otherInputIndex);
 
-        unsigned int getNumberOfInputs(void) const;
-
         void evaluate(void);
 
         virtual std::string toString(void) const override;
@@ -33,16 +31,23 @@ class AbstractLogicGate : public AbstractComponent
     protected:
 
         virtual Signal::SignalState evaluateOutput(void) const = 0;
-        void emitOutputSignal(const Signal::SignalState signalState); // todo: const ?
+
+        void emitOutputSignal(const Signal::SignalState signalState) const;
 
         void checkConnection(AbstractLogicGate * const otherGate,
                              const unsigned int otherInputIndex) const;
 
+        void connectOutput(AbstractLogicGate * const otherGate);
+        void disConnectInput(AbstractLogicGate * const otherGate);
+
+        unsigned int getNumberOfInputs(void) const;
+
         std::vector<DigitalInput> mInputs;
-        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectedGates;
+
+        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectedInputs;
+        std::set<AbstractLogicGate *> mConnectedOutputs;
 
         Signal::SignalState mOutputState;
-
 };
 
 #endif // ABSTRACTLOGICGATE_H
