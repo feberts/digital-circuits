@@ -70,7 +70,7 @@ void AbstractLogicGate::connect(AbstractLogicGate * const otherGate,
         gate->second.insert(otherInputIndex);
     }
 
-    evaluate(); // todo ?
+    evaluate(); // todo nötig ?
 }
 
 
@@ -160,22 +160,12 @@ std::string AbstractLogicGate::toString(void) const
 
 void AbstractLogicGate::emitOutputSignal(const Signal::SignalState signalState)
 {
-    // todo
-
     for(auto gate = mConnectedGates.cbegin(); gate != mConnectedGates.cend(); ++gate)
     {
-        if(true)// todo
+        for(auto input = gate->second.cbegin(); input != gate->second.cend(); ++input)
         {
-            for(auto input = gate->second.cbegin(); input != gate->second.cend(); ++input)
-            {
-                gate->first->setInputState(*input, signalState);
-            }
+            gate->first->setInputState(*input, signalState);
         }
-        else // gate was deleted
-        {
-
-        }
-
     }
 }
 
