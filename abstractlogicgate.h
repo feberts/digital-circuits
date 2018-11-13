@@ -37,15 +37,15 @@ class AbstractLogicGate : public AbstractComponent
         void checkConnection(AbstractLogicGate * const otherGate,
                              const unsigned int otherInputIndex) const;
 
-        void connectOutput(AbstractLogicGate * const otherGate);
-        void disConnectInput(AbstractLogicGate * const otherGate);
+        void connect(AbstractLogicGate * const otherGate);
+        void disConnect(AbstractLogicGate * const otherGate);
 
         unsigned int getNumberOfInputs(void) const;
 
         std::vector<DigitalInput> mInputs;
 
-        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectedInputs;
-        std::set<AbstractLogicGate *> mConnectedOutputs;
+        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectionsToOtherGates;
+        std::set<AbstractLogicGate *> mConnectionsFromOtherGates;
 
         Signal::SignalState mOutputState;
 };
