@@ -104,12 +104,9 @@ void CircuitsTest::testGateConnections() const
 
         gateAnd1->setInputState(1, Signal::HIGH);
         cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
-//cout << gateAnd1->toString() << endl;
+
         gateAnd1->disConnect(gateAnd2, 0);
-//cout << gateAnd1->toString() << endl;
         cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
-
-
 
         try
         {

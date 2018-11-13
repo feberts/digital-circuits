@@ -26,6 +26,12 @@ AbstractLogicGate::AbstractLogicGate(const unsigned int numberOfInputs,
 }
 
 
+AbstractLogicGate::~AbstractLogicGate(void)
+{
+    emitOutputSignal(Signal::LOW);
+}
+
+
 void AbstractLogicGate::setInputState(const unsigned int inputIndex, const Signal::SignalState newState)
 {
     try
@@ -111,7 +117,7 @@ unsigned int AbstractLogicGate::getNumberOfInputs(void) const
 void AbstractLogicGate::evaluate()
 {
     mOutputState = evaluateOutput();
-    emitOutputSignal();
+    emitOutputSignal(mOutputState);
 }
 
 
@@ -152,7 +158,7 @@ std::string AbstractLogicGate::toString(void) const
 }
 
 
-void AbstractLogicGate::emitOutputSignal(void)
+void AbstractLogicGate::emitOutputSignal(const Signal::SignalState signalState)
 {
     // todo
 
@@ -162,7 +168,7 @@ void AbstractLogicGate::emitOutputSignal(void)
         {
             for(auto input = gate->second.cbegin(); input != gate->second.cend(); ++input)
             {
-                gate->first->setInputState(*input, mOutputState);
+                gate->first->setInputState(*input, signalState);
             }
         }
         else // gate was deleted

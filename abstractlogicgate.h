@@ -16,6 +16,8 @@ class AbstractLogicGate : public AbstractComponent
         AbstractLogicGate(const unsigned int numberOfInputs,
                           const std::string & name = "");
 
+        virtual ~AbstractLogicGate(void);
+
         void setInputState(const unsigned int inputIndex, const Signal::SignalState newState);
         Signal::SignalState getOutputState(void) const;
 
@@ -31,7 +33,7 @@ class AbstractLogicGate : public AbstractComponent
     protected:
 
         virtual Signal::SignalState evaluateOutput(void) const = 0;
-        void emitOutputSignal(void); // todo: const ?
+        void emitOutputSignal(const Signal::SignalState signalState); // todo: const ?
 
         void checkConnection(AbstractLogicGate * const otherGate,
                              const unsigned int otherInputIndex) const;
