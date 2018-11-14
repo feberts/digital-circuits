@@ -1,7 +1,7 @@
 #include "gateand.h"
 
 
-Signal::SignalState GateAND::evaluateOutput(void) const
+Signal::SignalState GateAND::evaluateState(void) const
 {
     Signal::SignalState newOutputState = Signal::HIGH;
 

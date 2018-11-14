@@ -15,7 +15,8 @@ AbstractLogicGate::AbstractLogicGate(const string & name)
 AbstractLogicGate::AbstractLogicGate(const unsigned int numberOfInputs,
                                      const string & name)
     : AbstractComponent(name),
-      mInputs(vector<DigitalInput *>(numberOfInputs, new DigitalInput(this)))/*,*/
+      mInputs(vector<DigitalInput *>(numberOfInputs, new DigitalInput(this))),
+      mOutput(new DigitalOutput)
 //      mConnectionsToOtherGates({}),
 //      mConnectionsFromOtherGates({}),
 //      mGateState(Signal::LOW)
@@ -53,7 +54,7 @@ void AbstractLogicGate::setInputState(const unsigned int inputIndex, const Signa
 
 Signal::SignalState AbstractLogicGate::getOutputState() const
 {
-//    return mGateState;
+    return mGateState;
 }
 
 
@@ -120,14 +121,14 @@ void AbstractLogicGate::disConnect(AbstractLogicGate * const otherGate,
 
 unsigned int AbstractLogicGate::getNumberOfInputs(void) const
 {
-//    return mInputs.size();
+    return mInputs.size();
 }
 
 
 void AbstractLogicGate::evaluate()
 {
-    mGateState = evaluateOutput();
-//    emitOutputSignal(mGateState);
+    mGateState = evaluateState();
+    mOutput->setState(mGateState);
 }
 
 
@@ -167,17 +168,6 @@ std::string AbstractLogicGate::toString(void) const
 //    return retStr;
 }
 
-
-void AbstractLogicGate::emitOutputSignal(const Signal::SignalState signalState) const
-{
-//    for(auto gate = mConnectionsToOtherGates.cbegin(); gate != mConnectionsToOtherGates.cend(); ++gate)
-//    {
-//        for(auto input = gate->second.cbegin(); input != gate->second.cend(); ++input)
-//        {
-//            gate->first->setInputState(*input, signalState);
-//        }
-//    }
-}
 
 
 void AbstractLogicGate::checkConnection(AbstractLogicGate * const otherGate,

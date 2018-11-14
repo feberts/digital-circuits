@@ -6,6 +6,7 @@
 #include <set>
 #include "abstractcomponent.h"
 #include "digitalinput.h"
+#include "digitaloutput.h"
 
 
 class AbstractLogicGate : public AbstractComponent
@@ -30,9 +31,8 @@ class AbstractLogicGate : public AbstractComponent
 
     protected:
 
-        virtual Signal::SignalState evaluateOutput(void) const = 0;
+        virtual Signal::SignalState evaluateState(void) const = 0;
 
-        void emitOutputSignal(const Signal::SignalState signalState) const;
 
         void checkConnection(AbstractLogicGate * const otherGate,
                              const unsigned int otherInputIndex) const;
@@ -43,6 +43,7 @@ class AbstractLogicGate : public AbstractComponent
         unsigned int getNumberOfInputs(void) const;
 
         std::vector<DigitalInput *> mInputs;
+        DigitalOutput * mOutput;
 
 //        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectionsToOtherGates;
 //        std::set<AbstractLogicGate *> mConnectionsFromOtherGates;

@@ -10,7 +10,7 @@ class GateAND : public AbstractLogicGate
 
     protected:
 
-        virtual Signal::SignalState evaluateOutput(void) const override;
+        virtual Signal::SignalState evaluateState(void) const override;
 };
 
 #endif // GATEAND_H

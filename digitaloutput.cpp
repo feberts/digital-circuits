@@ -1,10 +1,11 @@
 #include "digitaloutput.h"
 
 #include <stdexcept>
-
+#include "abstractlogicgate.h"
 
 DigitalOutput::DigitalOutput(void)
-    : mOuputState(Signal::LOW)
+    : mOuputState(Signal::LOW),
+      mConnectionsToOtherGates({})
 { }
 
 
@@ -13,7 +14,7 @@ void DigitalOutput::setState(const Signal::SignalState newState)
     if(mOuputState != newState)
     {
         mOuputState = newState;
-        // todo an alle anderen angeschlossenen gates emittieren
+        emitOutputSignal(mOuputState); // todo : nötig mit parameter ?
     }
 }
 
@@ -21,4 +22,16 @@ void DigitalOutput::setState(const Signal::SignalState newState)
 Signal::SignalState DigitalOutput::getOutputState(void) const
 {
     return mOuputState;
+}
+
+
+void DigitalOutput::emitOutputSignal(const Signal::SignalState signalState) const
+{
+    for(auto gate = mConnectionsToOtherGates.cbegin(); gate != mConnectionsToOtherGates.cend(); ++gate)
+    {
+        for(auto input = gate->second.cbegin(); input != gate->second.cend(); ++input)
+        {
+            gate->first->setInputState(*input, signalState);
+        }
+    }
 }
