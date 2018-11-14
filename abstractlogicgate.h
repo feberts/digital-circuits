@@ -42,12 +42,12 @@ class AbstractLogicGate : public AbstractComponent
 
         unsigned int getNumberOfInputs(void) const;
 
-        std::vector<DigitalInput> mInputs;
+        std::vector<DigitalInput *> mInputs;
 
-        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectionsToOtherGates;
-        std::set<AbstractLogicGate *> mConnectionsFromOtherGates;
+//        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectionsToOtherGates;
+//        std::set<AbstractLogicGate *> mConnectionsFromOtherGates;
 
-        Signal::SignalState mOutputState;
+        Signal::SignalState mGateState;
 };
 
 #endif // ABSTRACTLOGICGATE_H

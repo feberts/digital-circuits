@@ -6,7 +6,7 @@
 
 DigitalInput::DigitalInput(AbstractLogicGate * const parentGate)
     : mParentGate(parentGate),
-      mState(Signal::LOW)
+      mInputState(Signal::LOW)
 {
     if(!mParentGate)
     {
@@ -17,9 +17,10 @@ DigitalInput::DigitalInput(AbstractLogicGate * const parentGate)
 
 void DigitalInput::setState(const Signal::SignalState newState)
 {
-    if(mState != newState)
+    if(mInputState != newState)
     {
-        mState = newState;
+        mInputState = newState;
+        // todo alle anderen angeschlossenen gates abfragen
         mParentGate->evaluate();
     }
 }
@@ -27,5 +28,5 @@ void DigitalInput::setState(const Signal::SignalState newState)
 
 Signal::SignalState DigitalInput::getState(void) const
 {
-    return mState;
+    return mInputState;
 }

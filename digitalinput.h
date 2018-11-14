@@ -19,7 +19,7 @@ class DigitalInput
     protected:
 
         AbstractLogicGate * mParentGate;
-        Signal::SignalState mState;
+        Signal::SignalState mInputState;
 };
 
 #endif // DIGITALINPUT_H

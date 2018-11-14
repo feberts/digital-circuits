@@ -21,7 +21,8 @@ SOURCES += \
     circuitstest.cpp \
     digitalinput.cpp \
     gateand.cpp \
-    signal.cpp
+    signal.cpp \
+    digitaloutput.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,4 +35,5 @@ HEADERS += \
     circuitstest.h \
     digitalinput.h \
     gateand.h \
-    signal.h
+    signal.h \
+    digitaloutput.h

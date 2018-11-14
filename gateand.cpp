@@ -5,9 +5,9 @@ Signal::SignalState GateAND::evaluateOutput(void) const
 {
     Signal::SignalState newOutputState = Signal::HIGH;
 
-    for(const DigitalInput & input : mInputs)
+    for(DigitalInput const * const input : mInputs)
     {
-        if(input.getState() == Signal::LOW)
+        if(input->getState() == Signal::LOW)
         {
             newOutputState = Signal::LOW;
         }
