@@ -141,7 +141,6 @@ void CircuitsTest::testGateConnections() const
         cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         delete gateAnd1;
-        gateAnd1 = nullptr; // todo : test entfernen
         cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
     }
 

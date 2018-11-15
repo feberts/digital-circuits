@@ -20,6 +20,20 @@ DigitalOutput::DigitalOutput(AbstractLogicGate * const parentGate)
     }
 }
 
+DigitalOutput::~DigitalOutput()
+{
+    mOutputState = Signal::LOW;
+    emitOutputSignal(Signal::LOW);
+
+    for(auto gate = mConnectionsToOtherGates.cbegin(); gate != mConnectionsToOtherGates.cend(); ++gate)
+    {
+        for(auto input = gate->second.cbegin(); input != gate->second.cend(); ++input)
+        {
+            gate->first->disConnectFromOutput(mParentGate, *input);
+        }
+    }
+
+}
 
 
 void DigitalOutput::setState(const Signal::SignalState newState)
@@ -27,7 +41,7 @@ void DigitalOutput::setState(const Signal::SignalState newState)
     if(mOutputState != newState)
     {
         mOutputState = newState;
-        emitOutputSignal(mOutputState); // todo : nötig mit parameter ?
+        emitOutputSignal(mOutputState);
     }
 }
 
@@ -39,29 +53,30 @@ Signal::SignalState DigitalOutput::getOutputState(void) const
 
 
 void DigitalOutput::connect(AbstractLogicGate * const otherGate,
-                                const unsigned int otherInputIndex)
+                            const unsigned int otherInputIndex)
 {
-        auto gate = mConnectionsToOtherGates.find(otherGate);
+    auto gate = mConnectionsToOtherGates.find(otherGate);
 
-        if(gate == mConnectionsToOtherGates.end()) // not yet connected to otherGate
-        {
-            set<unsigned int> inputSet;
-            inputSet.insert(otherInputIndex);
+    if(gate == mConnectionsToOtherGates.end()) // not yet connected to otherGate
+    {
+        set<unsigned int> inputSet;
+        inputSet.insert(otherInputIndex);
 
-            mConnectionsToOtherGates.insert(pairGateInputset(otherGate, inputSet));
-        }
-        else // already connected to at least one input of otherGate
-        {
-            gate->second.insert(otherInputIndex);
-        }
+        mConnectionsToOtherGates.insert(pairGateInputset(otherGate, inputSet));
+    }
+    else // already connected to at least one input of otherGate
+    {
+        gate->second.insert(otherInputIndex);
+    }
 
-        otherGate->connectToOutput(mParentGate, otherInputIndex);
+    otherGate->connectToOutput(mParentGate, otherInputIndex);
 
-        emitOutputSignal(mOutputState); // todo nötig ?
+    emitOutputSignal(mOutputState); // todo nötig ?
 }
 
 void DigitalOutput::disConnect(AbstractLogicGate * const otherGate,
-                                   const unsigned int otherInputIndex)
+                               const unsigned int otherInputIndex,
+                               const bool otherGateDeleted)
 {
     auto gate = mConnectionsToOtherGates.find(otherGate);
 
@@ -86,8 +101,11 @@ void DigitalOutput::disConnect(AbstractLogicGate * const otherGate,
                 mConnectionsToOtherGates.erase(otherGate);
             }
 
-            otherGate->disConnectFromOutput(mParentGate, otherInputIndex);
-            otherGate->setInputState(otherInputIndex, Signal::LOW);
+            if(!otherGateDeleted)
+            {
+                otherGate->disConnectFromOutput(mParentGate, otherInputIndex);
+                otherGate->setInputState(otherInputIndex, Signal::LOW);
+            }
         }
     }
 }

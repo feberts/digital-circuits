@@ -25,6 +25,8 @@ class AbstractLogicGate : public AbstractComponent
         void connect(AbstractLogicGate * const otherGate, const unsigned int otherInputIndex);
         void disConnect(AbstractLogicGate * const otherGate, const unsigned int otherInputIndex);
 
+        void disConnectFromDeletedGate(AbstractLogicGate * const otherGate, const unsigned int otherInputIndex);
+
         void evaluate(void);
 
         virtual std::string toString(void) const override;
@@ -47,8 +49,6 @@ class AbstractLogicGate : public AbstractComponent
         std::vector<DigitalInput *> mInputs;
         DigitalOutput * mOutput;
 
-//        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectionsToOtherGates;
-//        std::set<AbstractLogicGate *> mConnectionsFromOtherGates;
 
         Signal::SignalState mGateState;
 };

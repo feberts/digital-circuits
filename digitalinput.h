@@ -11,8 +11,10 @@ class DigitalInput
 {
     public:
 
-        DigitalInput() = delete;
-        DigitalInput(AbstractLogicGate * const parentGate);
+        DigitalInput(void) = delete;
+        DigitalInput(AbstractLogicGate * const parentGate, const unsigned int inputIndex = 0);
+
+        ~DigitalInput(void);
 
         void setState(const Signal::SignalState newState);
         Signal::SignalState getState(void) const;
@@ -25,6 +27,7 @@ class DigitalInput
         AbstractLogicGate * mParentGate;
         Signal::SignalState mInputState;
         std::set<AbstractLogicGate *> mConnectionsFromOtherGates;
+        unsigned int mInputIndex;
 };
 
 #endif // DIGITALINPUT_H
