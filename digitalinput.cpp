@@ -3,10 +3,13 @@
 #include <stdexcept>
 #include "abstractlogicgate.h"
 
+using namespace std;
+
 
 DigitalInput::DigitalInput(AbstractLogicGate * const parentGate)
     : mParentGate(parentGate),
-      mInputState(Signal::LOW)
+      mInputState(Signal::LOW),
+      mConnectionsFromOtherGates({})
 {
     if(!mParentGate)
     {
@@ -30,3 +33,16 @@ Signal::SignalState DigitalInput::getState(void) const
 {
     return mInputState;
 }
+
+
+void DigitalInput::connectToOutput(AbstractLogicGate * const otherGate)
+{
+    if(!otherGate)
+    {
+        throw invalid_argument("DigitalInput::connectToOutput : otherGate is null");
+    }
+
+    mConnectionsFromOtherGates.insert(otherGate);
+}
+
+

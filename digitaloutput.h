@@ -11,16 +11,21 @@ class DigitalOutput
 {
     public:
 
-        DigitalOutput(void);
+        DigitalOutput() = delete;
+        DigitalOutput(AbstractLogicGate * const parentGate);
 
         void setState(const Signal::SignalState newState);
         Signal::SignalState getOutputState(void) const;
+
+        void connect(AbstractLogicGate * const otherGate,
+                     const unsigned int otherInputIndex);
 
     protected:
 
         void emitOutputSignal(const Signal::SignalState signalState) const;
 
-        Signal::SignalState mOuputState;
+        AbstractLogicGate * mParentGate;
+        Signal::SignalState mOutputState;
         std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectionsToOtherGates;
 };
 
