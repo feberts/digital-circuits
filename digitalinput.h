@@ -18,6 +18,7 @@ class DigitalInput
         Signal::SignalState getState(void) const;
 
         void connectToOutput(AbstractLogicGate * const otherGate);
+        void disConnectFromOutput(AbstractLogicGate * const otherGate);
 
     protected:
 

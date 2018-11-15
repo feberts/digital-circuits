@@ -19,6 +19,8 @@ class DigitalOutput
 
         void connect(AbstractLogicGate * const otherGate,
                      const unsigned int otherInputIndex);
+        void disConnect(AbstractLogicGate * const otherGate,
+                                           const unsigned int otherInputIndex);
 
     protected:
 

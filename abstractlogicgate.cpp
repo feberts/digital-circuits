@@ -69,36 +69,8 @@ void AbstractLogicGate::connect(AbstractLogicGate * const otherGate,
 void AbstractLogicGate::disConnect(AbstractLogicGate * const otherGate,
                                    const unsigned int otherInputIndex)
 {
-//    checkConnection(otherGate, otherInputIndex);
-
-//    auto gate = mConnectionsToOtherGates.find(otherGate);
-
-//    if(gate == mConnectionsToOtherGates.end()) // no connections to otherGate found
-//    {
-//        throw invalid_argument("AbstractLogicGate::disConnect : not connected to otherGate");
-//    }
-//    else // connected to at least one input of otherGate
-//    {
-//        auto input = gate->second.find(otherInputIndex);
-
-//        if(input == gate->second.end()) // not connected to this specific input
-//        {
-//            throw invalid_argument("AbstractLogicGate::disConnect : not connected to this specific input");
-//        }
-//        else // connected to this specific input
-//        {
-//            gate->second.erase(otherInputIndex);
-
-//            if(gate->second.empty()) // remove otherGate completely if all inputs disconnected
-//            {
-//                mConnectionsToOtherGates.erase(otherGate);
-//                otherGate->disConnect(this);
-//            }
-
-//            otherGate->setInputState(otherInputIndex, Signal::LOW); // todo
-//            // ... was passiert, wenn dort noch andere gates mit HIGH angeschlossen sind?
-//        }
-//    }
+    checkConnection(otherGate, otherInputIndex);
+    mOutput->disConnect(otherGate, otherInputIndex);
 }
 
 
@@ -188,10 +160,17 @@ void AbstractLogicGate::connectToOutput(AbstractLogicGate * const otherGate, con
 
 void AbstractLogicGate::disConnectFromOutput(AbstractLogicGate * const otherGate, const unsigned int inputIndex)
 {
-//    if(!otherGate)
-//    {
-//        throw invalid_argument("AbstractLogicGate::disConnect : otherGate is null");
-//    }
+    if(!otherGate)
+    {
+        throw invalid_argument("AbstractLogicGate::disConnect : otherGate is null");
+    }
 
-//    mConnectionsToOtherGates.erase(otherGate); // todo : from ?
+    try
+    {
+        mInputs.at(inputIndex)->disConnectFromOutput(otherGate);
+    }
+    catch(out_of_range)
+    {
+        throw invalid_argument("AbstractLogicGate::disConnectFromOutput : inputIndex is an invalid index");
+    }
 }

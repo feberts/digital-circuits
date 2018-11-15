@@ -60,6 +60,37 @@ void DigitalOutput::connect(AbstractLogicGate * const otherGate,
         emitOutputSignal(mOutputState); // todo nötig ?
 }
 
+void DigitalOutput::disConnect(AbstractLogicGate * const otherGate,
+                                   const unsigned int otherInputIndex)
+{
+    auto gate = mConnectionsToOtherGates.find(otherGate);
+
+    if(gate == mConnectionsToOtherGates.end()) // no connections to otherGate found
+    {
+        throw invalid_argument("AbstractLogicGate::disConnect : not connected to otherGate");
+    }
+    else // connected to at least one input of otherGate
+    {
+        auto input = gate->second.find(otherInputIndex);
+
+        if(input == gate->second.end()) // not connected to this specific input
+        {
+            throw invalid_argument("AbstractLogicGate::disConnect : not connected to this specific input");
+        }
+        else // connected to this specific input
+        {
+            gate->second.erase(otherInputIndex);
+
+            if(gate->second.empty()) // remove otherGate completely if all inputs are disconnected
+            {
+                mConnectionsToOtherGates.erase(otherGate);
+            }
+
+            otherGate->disConnectFromOutput(mParentGate, otherInputIndex);
+            otherGate->setInputState(otherInputIndex, Signal::LOW);
+        }
+    }
+}
 
 void DigitalOutput::emitOutputSignal(const Signal::SignalState signalState) const
 {

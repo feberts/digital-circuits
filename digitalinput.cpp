@@ -45,4 +45,12 @@ void DigitalInput::connectToOutput(AbstractLogicGate * const otherGate)
     mConnectionsFromOtherGates.insert(otherGate);
 }
 
+void DigitalInput::disConnectFromOutput(AbstractLogicGate * const otherGate)
+{
+    if(!otherGate)
+    {
+        throw invalid_argument("AbstractLogicGate::disConnect : otherGate is null");
+    }
 
+    mConnectionsFromOtherGates.erase(otherGate);
+}
