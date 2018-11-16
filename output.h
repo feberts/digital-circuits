@@ -19,13 +19,7 @@ class Output
         ~Output();
 
         void setState(const Signal::SignalState newState);
-        Signal::SignalState getState(void) const;
-
-        void connect(AbstractGate * const otherGate,
-                     const unsigned int otherInputIndex);
-        void disconnect(AbstractGate * const otherGate,
-                        const unsigned int otherInputIndex,
-                        const bool otherGateDeleted = false);
+        Signal::SignalState getState(void) const; // todo : protected ?
 
         void connect(Input * const input);
         void disconnect(Input * const input);
@@ -35,8 +29,9 @@ class Output
         void emitOutputSignal(const Signal::SignalState signalState) const;
 
         AbstractGate * mParentGate;
+
         Signal::SignalState mOutputState;
-        std::map<AbstractGate *, std::set<unsigned int>> mConnectionsToOtherGates;
+        std::set<Input *> mConnectedInputs;
 };
 
 #endif // OUTPUT_H

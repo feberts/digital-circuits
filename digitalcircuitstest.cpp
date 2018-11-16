@@ -9,10 +9,10 @@ using namespace std;
 void DigitalCircuitsTest::testAll(void)
 {
     testInputsOutputs();
-//        testGateAND();
-//        testGateConnect();
-//        testGateDisconnect();
-//        testGateDelete();
+    testGateAND();
+    testGateConnect();
+    testGateDisconnect();
+    testGateDelete();
 
     if(mError)
     {
@@ -101,6 +101,17 @@ void DigitalCircuitsTest::testInputsOutputs(void)
         out1->disconnect(in1);
         evaluate(out1->getState() == Signal::HIGH);
         evaluate(in1->getState() == Signal::LOW);
+
+        try
+        {
+            out1->disconnect(in1);
+            evaluate(false);
+        }
+        catch(invalid_argument)
+        {
+            evaluate(true);
+        }
+
     }
 
     {

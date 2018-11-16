@@ -14,26 +14,22 @@ class Input
     public:
 
         Input(void);
-        Input(AbstractGate * const parentGate, const unsigned int inputIndex = 0);
+        Input(AbstractGate * const parentGate);
 
         ~Input(void);
 
-        void setState(const Signal::SignalState newState);
+        void setState(const Signal::SignalState newState); // todo : protected ?
         Signal::SignalState getState(void) const;
 
-        void connect(AbstractGate * const otherGate);
-        void disconnect(AbstractGate * const otherGate);
-
-        void connect(Output * const output);
-        void disconnect(Output * const output);
+        void connect(Output * const output); // todo : protected ?
+        void disconnect(Output * const output); // todo : protected ?
 
     protected:
 
 
         AbstractGate * mParentGate;
         Signal::SignalState mInputState;
-        std::set<AbstractGate *> mConnectionsFromOtherGates;
-        unsigned int mInputIndex;
+        std::set<Output *> mConnectedOutputs;
 };
 
 #endif // INPUT_H

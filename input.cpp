@@ -8,28 +8,28 @@ using namespace std;
 
 
 Input::Input(void)
-{
+    : mParentGate(nullptr),
+      mInputState(Signal::LOW),
+      mConnectedOutputs({})
+{ }
 
-}
 
-
-Input::Input(AbstractGate * const parentGate, const unsigned int inputIndex)
+Input::Input(AbstractGate * const parentGate)
     : mParentGate(parentGate),
       mInputState(Signal::LOW),
-      mConnectionsFromOtherGates({}),
-      mInputIndex(inputIndex)
+      mConnectedOutputs({})
 {
     if(!mParentGate)
     {
-        throw std::invalid_argument("DigitalInput::DigitalInput : parentGate is null");
+        throw std::invalid_argument("Input::Input : parentGate is null");
     }
 }
 
 Input::~Input()
 {
-    for(AbstractGate * connectedGate : mConnectionsFromOtherGates)
+    for(Output * output : mConnectedOutputs)
     {
-        connectedGate->disConnectFromDeletedGate(mParentGate, mInputIndex);
+        output->disconnect(this);
     }
 }
 
@@ -38,20 +38,17 @@ void Input::setState(const Signal::SignalState newState)
 {
     if(mInputState != newState)
     {
-        mInputState = newState;
+        mInputState = Signal::LOW;
 
-        if(mInputState == Signal::LOW)
+        for(Output * output : mConnectedOutputs)
         {
-            for(AbstractGate * connectedGate : mConnectionsFromOtherGates)
+            if(output->getState() == Signal::HIGH)
             {
-                if(connectedGate->getOutputState() == Signal::HIGH)
-                {
-                    mInputState = Signal::HIGH;
-                }
+                mInputState = Signal::HIGH;
             }
         }
 
-        mParentGate->evaluate();
+        //        mParentGate->evaluate(); // todo
     }
 }
 
@@ -62,32 +59,22 @@ Signal::SignalState Input::getState(void) const
 }
 
 
-void Input::connect(AbstractGate * const otherGate)
-{
-    if(!otherGate)
-    {
-        throw invalid_argument("DigitalInput::connectToOutput : otherGate is null");
-    }
-
-    mConnectionsFromOtherGates.insert(otherGate);
-}
-
-void Input::disconnect(AbstractGate * const otherGate)
-{
-    if(!otherGate)
-    {
-        throw invalid_argument("AbstractLogicGate::disConnect : otherGate is null");
-    }
-
-    mConnectionsFromOtherGates.erase(otherGate);
-}
-
 void Input::connect(Output * const output)
 {
+    if(!output)
+    {
+        throw invalid_argument("Input::connect : output is null");
+    }
 
+    mConnectedOutputs.insert(output);
 }
 void Input::disconnect(Output * const output)
 {
+    if(!output)
+    {
+        throw invalid_argument("Input::disconnect : output is null");
+    }
 
+    mConnectedOutputs.erase(output);
 
 }
