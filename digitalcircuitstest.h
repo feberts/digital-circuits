@@ -10,6 +10,7 @@ class DigitalCircuitsTest
 
         void testAll(void);
 
+        void testInputsOutputs(void);
         void testGateAND(void);
         void testGateConnect(void);
         void testGateDisconnect(void);

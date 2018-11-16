@@ -9,6 +9,12 @@ using namespace std;
 typedef pair<AbstractGate *, set<unsigned int>> pairGateInputset;
 
 
+Output::Output(void)
+{
+
+}
+
+
 Output::Output(AbstractGate * const parentGate)
     : mParentGate(parentGate),
       mOutputState(Signal::LOW),

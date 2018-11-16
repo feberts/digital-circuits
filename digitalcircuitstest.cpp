@@ -8,10 +8,11 @@ using namespace std;
 
 void DigitalCircuitsTest::testAll(void)
 {
-    testGateAND();
-    testGateConnect();
-    testGateDisconnect();
-    testGateDelete();
+    testInputsOutputs();
+//    testGateAND();
+//    testGateConnect();
+//    testGateDisconnect();
+//    testGateDelete();
 
     if(mError)
     {
@@ -37,9 +38,24 @@ bool DigitalCircuitsTest::evaluate(const bool testResult)
 }
 
 
+void DigitalCircuitsTest::testInputsOutputs(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testInputsOutputs =====" << endl;
+
+    {
+        cout << "     ===== 1 =====" << endl;
+
+        Input * in1 = new Input;
+        Output * out1 = new Output;
+    }
+
+    cout << "     ===== END of DigitalCircuitsTest::testInputsOutputs =====" << endl;
+}
+
+
 void DigitalCircuitsTest::testGateAND(void)
 {
-    cout << "     ===== CircuitsTest::testGateAND =====" << endl;
+    cout << "     ===== DigitalCircuitsTest::testGateAND =====" << endl;
 
     {
         cout << "     ===== 1 =====" << endl;
@@ -127,13 +143,13 @@ void DigitalCircuitsTest::testGateAND(void)
         }
     }
 
-    cout << "     ===== END of CircuitsTest::testGateAND =====" << endl;
+    cout << "     ===== END of DigitalCircuitsTest::testGateAND =====" << endl;
 }
 
 
 void DigitalCircuitsTest::testGateConnect()
 {
-    cout << "     ===== CircuitsTest::testGateConnect =====" << endl;
+    cout << "     ===== DigitalCircuitsTest::testGateConnect =====" << endl;
 
     {
         cout << "     ===== 1 =====" << endl;
@@ -302,13 +318,13 @@ void DigitalCircuitsTest::testGateConnect()
         evaluate(gateAnd3->getOutputState() == Signal::HIGH);
     }
 
-    cout << "     ===== END of CircuitsTest::testGateConnect =====" << endl;
+    cout << "     ===== END of DigitalCircuitsTest::testGateConnect =====" << endl;
 }
 
 
 void DigitalCircuitsTest::testGateDisconnect()
 {
-    cout << "     ===== CircuitsTest::testGateDisconnect =====" << endl;
+    cout << "     ===== DigitalCircuitsTest::testGateDisconnect =====" << endl;
 
     {
         cout << "     ===== 1 =====" << endl;
@@ -427,13 +443,13 @@ void DigitalCircuitsTest::testGateDisconnect()
         }
     }
 
-    cout << "     ===== END of CircuitsTest::testGateDisconnect =====" << endl;
+    cout << "     ===== END of DigitalCircuitsTest::testGateDisconnect =====" << endl;
 }
 
 
 void DigitalCircuitsTest::testGateDelete()
 {
-    cout << "     ===== CircuitsTest::testGateDelete =====" << endl;
+    cout << "     ===== DigitalCircuitsTest::testGateDelete =====" << endl;
 
     {
         cout << "     ===== 1 =====" << endl;
@@ -563,5 +579,5 @@ void DigitalCircuitsTest::testGateDelete()
         evaluate(gateAnd1->getOutputState() == Signal::LOW);
     }
 
-    cout << "     ===== END of CircuitsTest::testGateDelete =====" << endl;
+    cout << "     ===== END of DigitalCircuitsTest::testGateDelete =====" << endl;
 }

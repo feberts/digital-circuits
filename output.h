@@ -11,7 +11,7 @@ class Output
 {
     public:
 
-        Output() = delete;
+        Output(void);
         Output(AbstractGate * const parentGate);
 
         ~Output();

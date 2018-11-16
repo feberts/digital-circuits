@@ -11,7 +11,7 @@ class Input
 {
     public:
 
-        Input(void) = delete;
+        Input(void);
         Input(AbstractGate * const parentGate, const unsigned int inputIndex = 0);
 
         ~Input(void);

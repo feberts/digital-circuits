@@ -6,6 +6,12 @@
 using namespace std;
 
 
+Input::Input(void)
+{
+
+}
+
+
 Input::Input(AbstractGate * const parentGate, const unsigned int inputIndex)
     : mParentGate(parentGate),
       mInputState(Signal::LOW),
