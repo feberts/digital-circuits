@@ -9,10 +9,10 @@ using namespace std;
 void DigitalCircuitsTest::testAll(void)
 {
     testInputsOutputs();
-//    testGateAND();
-//    testGateConnect();
-//    testGateDisconnect();
-//    testGateDelete();
+//        testGateAND();
+//        testGateConnect();
+//        testGateDisconnect();
+//        testGateDelete();
 
     if(mError)
     {
@@ -45,8 +45,152 @@ void DigitalCircuitsTest::testInputsOutputs(void)
     {
         cout << "     ===== 1 =====" << endl;
 
-        Input * in1 = new Input;
         Output * out1 = new Output;
+        Input * in1 = new Input;
+
+        evaluate(out1->getState() == Signal::LOW);
+        evaluate(in1->getState() == Signal::LOW);
+
+        out1->connect(in1);
+        evaluate(out1->getState() == Signal::LOW);
+        evaluate(in1->getState() == Signal::LOW);
+
+        out1->setState(Signal::HIGH);
+        evaluate(out1->getState() == Signal::HIGH);
+        evaluate(in1->getState() == Signal::HIGH);
+
+        out1->setState(Signal::LOW);
+        evaluate(in1->getState() == Signal::LOW);
+
+        in1->setState(Signal::HIGH);
+        evaluate(in1->getState() == Signal::LOW);
+
+        out1->setState(Signal::HIGH);
+        evaluate(in1->getState() == Signal::HIGH);
+
+        in1->setState(Signal::LOW);
+        evaluate(in1->getState() == Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 2 =====" << endl;
+
+        Output * out1 = new Output;
+        Input * in1 = new Input;
+
+        out1->setState(Signal::HIGH);
+        evaluate(out1->getState() == Signal::HIGH);
+
+        out1->connect(in1);
+        evaluate(in1->getState() == Signal::HIGH);
+    }
+
+
+    {
+        cout << "     ===== 3 =====" << endl;
+
+        Output * out1 = new Output;
+        Input * in1 = new Input;
+
+        out1->connect(in1);
+
+        out1->setState(Signal::HIGH);
+        evaluate(out1->getState() == Signal::HIGH);
+        evaluate(in1->getState() == Signal::HIGH);
+
+        out1->disconnect(in1);
+        evaluate(out1->getState() == Signal::HIGH);
+        evaluate(in1->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 4 =====" << endl;
+
+        Output * out1 = new Output;
+        Output * out2 = new Output;
+        Input * in1 = new Input;
+        Input * in2 = new Input;
+
+        out1->connect(in1);
+        out1->connect(in2);
+        out2->connect(in2);
+
+        out2->setState(Signal::HIGH);
+        evaluate(in1->getState() == Signal::LOW);
+        evaluate(in2->getState() == Signal::HIGH);
+
+        out1->setState(Signal::HIGH);
+        evaluate(in1->getState() == Signal::HIGH);
+        evaluate(in2->getState() == Signal::HIGH);
+
+        out1->setState(Signal::LOW);
+        evaluate(in1->getState() == Signal::LOW);
+        evaluate(in2->getState() == Signal::HIGH);
+
+        out1->setState(Signal::HIGH);
+        out2->disconnect(in2);
+        evaluate(in2->getState() == Signal::HIGH);
+        out1->disconnect(in2);
+        evaluate(in2->getState() == Signal::LOW);
+        evaluate(in1->getState() == Signal::HIGH);
+        out1->disconnect(in1);
+        evaluate(in1->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 5 =====" << endl;
+
+        Output * out1 = new Output;
+        Output * out2 = new Output;
+        Input * in1 = new Input;
+        Input * in2 = new Input;
+
+        out1->connect(in1);
+        out1->connect(in2);
+        out2->connect(in2);
+
+        out2->setState(Signal::HIGH);
+        out1->setState(Signal::HIGH);
+        evaluate(in1->getState() == Signal::HIGH);
+        evaluate(in2->getState() == Signal::HIGH);
+
+        delete out1;
+        evaluate(in1->getState() == Signal::LOW);
+        evaluate(in2->getState() == Signal::HIGH);
+
+        delete out2;
+        evaluate(in1->getState() == Signal::LOW);
+        evaluate(in2->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 6 =====" << endl;
+
+        Output * out1 = new Output;
+        Output * out2 = new Output;
+        Input * in1 = new Input;
+        Input * in2 = new Input;
+
+        out1->connect(in1);
+        out1->connect(in2);
+        out2->connect(in2);
+
+        out2->setState(Signal::HIGH);
+        out1->setState(Signal::HIGH);
+        evaluate(in1->getState() == Signal::HIGH);
+        evaluate(in2->getState() == Signal::HIGH);
+
+        delete in1;
+        out2->setState(Signal::LOW);
+        out1->setState(Signal::HIGH);
+        evaluate(out2->getState() == Signal::LOW);
+        evaluate(out1->getState() == Signal::HIGH);
+
+        delete in2;
+        out2->setState(Signal::HIGH);
+        out1->setState(Signal::LOW);
+        evaluate(out2->getState() == Signal::HIGH);
+        evaluate(out1->getState() == Signal::LOW);
     }
 
     cout << "     ===== END of DigitalCircuitsTest::testInputsOutputs =====" << endl;

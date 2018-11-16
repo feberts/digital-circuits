@@ -5,6 +5,8 @@
 #include <set>
 
 #include "signal.h"
+class Input;
+
 class AbstractGate;
 
 class Output
@@ -17,13 +19,16 @@ class Output
         ~Output();
 
         void setState(const Signal::SignalState newState);
-        Signal::SignalState getOutputState(void) const;
+        Signal::SignalState getState(void) const;
 
         void connect(AbstractGate * const otherGate,
                      const unsigned int otherInputIndex);
-        void disConnect(AbstractGate * const otherGate,
+        void disconnect(AbstractGate * const otherGate,
                         const unsigned int otherInputIndex,
                         const bool otherGateDeleted = false);
+
+        void connect(Input * const input);
+        void disconnect(Input * const input);
 
     protected:
 

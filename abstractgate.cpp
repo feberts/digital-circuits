@@ -55,7 +55,7 @@ void AbstractGate::setInputState(const unsigned int inputIndex, const Signal::Si
 
 Signal::SignalState AbstractGate::getOutputState() const
 {
-    return mOutput->getOutputState();
+    return mOutput->getState();
 }
 
 
@@ -71,14 +71,14 @@ void AbstractGate::disConnect(AbstractGate * const otherGate,
                                    const unsigned int otherInputIndex)
 {
     checkConnection(otherGate, otherInputIndex);
-    mOutput->disConnect(otherGate, otherInputIndex);
+    mOutput->disconnect(otherGate, otherInputIndex);
 }
 
 void AbstractGate::disConnectFromDeletedGate(AbstractGate * const otherGate,
                                    const unsigned int otherInputIndex)
 {
     checkConnection(otherGate, otherInputIndex);
-    mOutput->disConnect(otherGate, otherInputIndex, true);
+    mOutput->disconnect(otherGate, otherInputIndex, true);
 }
 
 unsigned int AbstractGate::getNumberOfInputs(void) const
@@ -156,7 +156,7 @@ void AbstractGate::connectToOutput(AbstractGate * const otherGate, const unsigne
 
     try
     {
-        mInputs.at(inputIndex)->connectToOutput(otherGate);
+        mInputs.at(inputIndex)->connect(otherGate);
     }
     catch(out_of_range)
     {
@@ -174,7 +174,7 @@ void AbstractGate::disConnectFromOutput(AbstractGate * const otherGate, const un
 
     try
     {
-        mInputs.at(inputIndex)->disConnectFromOutput(otherGate);
+        mInputs.at(inputIndex)->disconnect(otherGate);
     }
     catch(out_of_range)
     {

@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include "abstractgate.h"
+#include "output.h"
 
 using namespace std;
 
@@ -61,7 +62,7 @@ Signal::SignalState Input::getState(void) const
 }
 
 
-void Input::connectToOutput(AbstractGate * const otherGate)
+void Input::connect(AbstractGate * const otherGate)
 {
     if(!otherGate)
     {
@@ -71,7 +72,7 @@ void Input::connectToOutput(AbstractGate * const otherGate)
     mConnectionsFromOtherGates.insert(otherGate);
 }
 
-void Input::disConnectFromOutput(AbstractGate * const otherGate)
+void Input::disconnect(AbstractGate * const otherGate)
 {
     if(!otherGate)
     {
@@ -79,4 +80,14 @@ void Input::disConnectFromOutput(AbstractGate * const otherGate)
     }
 
     mConnectionsFromOtherGates.erase(otherGate);
+}
+
+void Input::connect(Output * const output)
+{
+
+}
+void Input::disconnect(Output * const output)
+{
+
+
 }

@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <set>
 #include "abstractgate.h"
+#include "input.h"
 
 using namespace std;
 
@@ -52,7 +53,7 @@ void Output::setState(const Signal::SignalState newState)
 }
 
 
-Signal::SignalState Output::getOutputState(void) const
+Signal::SignalState Output::getState(void) const
 {
     return mOutputState;
 }
@@ -80,7 +81,7 @@ void Output::connect(AbstractGate * const otherGate,
     emitOutputSignal(mOutputState); // todo nötig ?
 }
 
-void Output::disConnect(AbstractGate * const otherGate,
+void Output::disconnect(AbstractGate * const otherGate,
                                const unsigned int otherInputIndex,
                                const bool otherGateDeleted)
 {
@@ -125,4 +126,13 @@ void Output::emitOutputSignal(const Signal::SignalState signalState) const
             gate->first->setInputState(*input, signalState);
         }
     }
+}
+
+void Output::connect(Input * const input)
+{
+
+}
+void Output::disconnect(Input * const input)
+{
+
 }
