@@ -29,6 +29,7 @@ class Input
 
     protected:
 
+
         AbstractGate * mParentGate;
         Signal::SignalState mInputState;
         std::set<AbstractGate *> mConnectionsFromOtherGates;
