@@ -14,7 +14,7 @@ AbstractGate::AbstractGate(const unsigned int numberOfInputs,
                                      const string & name)
     : AbstractComponent(name),
       mInputs({}),
-      mOutput(new Output(this)),
+      mOutput(new Output),
       mGateState(Signal::LOW)
 {
 //    if(numberOfInputs < 2)

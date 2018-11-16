@@ -38,19 +38,47 @@ void Input::setState(const Signal::SignalState newState)
 {
     if(mInputState != newState)
     {
-        mInputState = Signal::LOW;
+        Signal::SignalState tempState = Signal::LOW;
 
         for(Output * output : mConnectedOutputs)
         {
             if(output->getState() == Signal::HIGH)
             {
-                mInputState = Signal::HIGH;
+                tempState = Signal::HIGH;
             }
         }
 
-        //        mParentGate->evaluate(); // todo
+        if(mInputState != tempState)
+        {
+            mInputState = tempState;
+
+            if(mParentGate)
+            {
+                mParentGate->evaluate();
+            }
+        }
     }
 }
+
+
+//void Input::setState(const Signal::SignalState newState)
+//{
+//    if(mInputState != newState)
+//    {
+//        mInputState = Signal::LOW;
+
+//        for(Output * output : mConnectedOutputs)
+//        {
+//            if(output->getState() == Signal::HIGH)
+//            {
+//                mInputState = Signal::HIGH;
+//            }
+//        }
+
+//            mParentGate->evaluate();
+
+//    }
+//}
 
 
 Signal::SignalState Input::getState(void) const

@@ -7,14 +7,12 @@
 #include "signal.h"
 class Input;
 
-class AbstractGate;
 
 class Output
 {
     public:
 
         Output(void);
-        Output(AbstractGate * const parentGate);
 
         ~Output();
 
@@ -26,9 +24,7 @@ class Output
 
     protected:
 
-        void emitOutputSignal(const Signal::SignalState signalState) const;
-
-        AbstractGate * mParentGate;
+        void emitOutputSignal(void) const;
 
         Signal::SignalState mOutputState;
         std::set<Input *> mConnectedInputs;

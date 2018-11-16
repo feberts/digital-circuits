@@ -2,36 +2,22 @@
 
 #include <stdexcept>
 #include <set>
-#include "abstractgate.h"
 #include "input.h"
 
 using namespace std;
 
 
 Output::Output(void)
-    : mParentGate(nullptr),
-      mOutputState(Signal::LOW),
+    : mOutputState(Signal::LOW),
       mConnectedInputs({})
 { }
 
 
-Output::Output(AbstractGate * const parentGate)
-    : mParentGate(parentGate),
-      mOutputState(Signal::LOW),
-      mConnectedInputs({})
-{
-    if(!mParentGate)
-    {
-        throw std::invalid_argument("Output::Output : parentGate is null");
-    }
-}
 
 Output::~Output()
 {
-
-
     mOutputState = Signal::LOW;
-    emitOutputSignal(Signal::LOW);
+    emitOutputSignal();
 
     for(Input * input : mConnectedInputs)
     {
@@ -45,7 +31,7 @@ void Output::setState(const Signal::SignalState newState)
     if(mOutputState != newState)
     {
         mOutputState = newState;
-        emitOutputSignal(mOutputState);
+        emitOutputSignal();
     }
 }
 
@@ -58,7 +44,7 @@ Signal::SignalState Output::getState(void) const
 
 
 
-void Output::emitOutputSignal(const Signal::SignalState signalState) const
+void Output::emitOutputSignal(void) const
 {
     for(Input * input : mConnectedInputs)
     {
@@ -76,7 +62,7 @@ void Output::connect(Input * const input)
     mConnectedInputs.insert(input);
     input->connect(this);
 
-    emitOutputSignal(mOutputState);
+    emitOutputSignal();
 }
 
 void Output::disconnect(Input * const input)
