@@ -1,12 +1,12 @@
 #ifndef GATEAND_H
 #define GATEAND_H
 
-#include "abstractlogicgate.h"
+#include "abstractgate.h"
 
 
-class GateAND : public AbstractLogicGate
+class GateAND : public AbstractGate
 {
-        using AbstractLogicGate::AbstractLogicGate;
+        using AbstractGate::AbstractGate;
 
     protected:
 

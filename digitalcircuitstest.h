@@ -1,12 +1,12 @@
-#ifndef CIRCUITSTEST_H
-#define CIRCUITSTEST_H
+#ifndef DIGITALCIRCUITSTEST_H
+#define DIGITALCIRCUITSTEST_H
 
 
-class CircuitsTest
+class DigitalCircuitsTest
 {
     public:
 
-        CircuitsTest() = default;
+        DigitalCircuitsTest() = default;
 
         void testAll(void);
 
@@ -21,4 +21,4 @@ class CircuitsTest
         bool mError = false;
 };
 
-#endif // CIRCUITSTEST_H
+#endif // DIGITALCIRCUITSTEST_H

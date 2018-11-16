@@ -1,15 +1,15 @@
-#include "digitaloutput.h"
+#include "output.h"
 
 #include <stdexcept>
 #include <set>
-#include "abstractlogicgate.h"
+#include "abstractgate.h"
 
 using namespace std;
 
-typedef pair<AbstractLogicGate *, set<unsigned int>> pairGateInputset;
+typedef pair<AbstractGate *, set<unsigned int>> pairGateInputset;
 
 
-DigitalOutput::DigitalOutput(AbstractLogicGate * const parentGate)
+Output::Output(AbstractGate * const parentGate)
     : mParentGate(parentGate),
       mOutputState(Signal::LOW),
       mConnectionsToOtherGates({})
@@ -20,7 +20,7 @@ DigitalOutput::DigitalOutput(AbstractLogicGate * const parentGate)
     }
 }
 
-DigitalOutput::~DigitalOutput()
+Output::~Output()
 {
     mOutputState = Signal::LOW;
     emitOutputSignal(Signal::LOW);
@@ -36,7 +36,7 @@ DigitalOutput::~DigitalOutput()
 }
 
 
-void DigitalOutput::setState(const Signal::SignalState newState)
+void Output::setState(const Signal::SignalState newState)
 {
     if(mOutputState != newState)
     {
@@ -46,13 +46,13 @@ void DigitalOutput::setState(const Signal::SignalState newState)
 }
 
 
-Signal::SignalState DigitalOutput::getOutputState(void) const
+Signal::SignalState Output::getOutputState(void) const
 {
     return mOutputState;
 }
 
 
-void DigitalOutput::connect(AbstractLogicGate * const otherGate,
+void Output::connect(AbstractGate * const otherGate,
                             const unsigned int otherInputIndex)
 {
     auto gate = mConnectionsToOtherGates.find(otherGate);
@@ -74,7 +74,7 @@ void DigitalOutput::connect(AbstractLogicGate * const otherGate,
     emitOutputSignal(mOutputState); // todo nötig ?
 }
 
-void DigitalOutput::disConnect(AbstractLogicGate * const otherGate,
+void Output::disConnect(AbstractGate * const otherGate,
                                const unsigned int otherInputIndex,
                                const bool otherGateDeleted)
 {
@@ -110,7 +110,7 @@ void DigitalOutput::disConnect(AbstractLogicGate * const otherGate,
     }
 }
 
-void DigitalOutput::emitOutputSignal(const Signal::SignalState signalState) const
+void Output::emitOutputSignal(const Signal::SignalState signalState) const
 {
     for(auto gate = mConnectionsToOtherGates.cbegin(); gate != mConnectionsToOtherGates.cend(); ++gate)
     {

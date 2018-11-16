@@ -17,12 +17,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     abstractcomponent.cpp \
-    abstractlogicgate.cpp \
-    circuitstest.cpp \
-    digitalinput.cpp \
     gateand.cpp \
     signal.cpp \
-    digitaloutput.cpp
+    abstractgate.cpp \
+    digitalcircuitstest.cpp \
+    input.cpp \
+    output.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -31,9 +31,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     abstractcomponent.h \
-    abstractlogicgate.h \
-    circuitstest.h \
-    digitalinput.h \
     gateand.h \
     signal.h \
-    digitaloutput.h
+    abstractgate.h \
+    digitalcircuitstest.h \
+    input.h \
+    output.h

@@ -1,20 +1,20 @@
-#include "abstractlogicgate.h"
+#include "abstractgate.h"
 
 #include <stdexcept>
 
 using namespace std;
 
 
-AbstractLogicGate::AbstractLogicGate(const string & name)
-    : AbstractLogicGate(2, name)
+AbstractGate::AbstractGate(const string & name)
+    : AbstractGate(2, name)
 { }
 
 
-AbstractLogicGate::AbstractLogicGate(const unsigned int numberOfInputs,
+AbstractGate::AbstractGate(const unsigned int numberOfInputs,
                                      const string & name)
     : AbstractComponent(name),
       mInputs({}),
-      mOutput(new DigitalOutput(this)),
+      mOutput(new Output(this)),
       mGateState(Signal::LOW)
 {
     if(numberOfInputs < 2)
@@ -24,14 +24,14 @@ AbstractLogicGate::AbstractLogicGate(const unsigned int numberOfInputs,
 
     for(unsigned int index = 0; index < numberOfInputs; index++)
     {
-        mInputs.push_back(new DigitalInput(this, index));
+        mInputs.push_back(new Input(this, index));
     }
 }
 
 
-AbstractLogicGate::~AbstractLogicGate(void)
+AbstractGate::~AbstractGate(void)
 {
-    for(DigitalInput * input : mInputs)
+    for(Input * input : mInputs)
     {
         delete input;
     }
@@ -40,7 +40,7 @@ AbstractLogicGate::~AbstractLogicGate(void)
 }
 
 
-void AbstractLogicGate::setInputState(const unsigned int inputIndex, const Signal::SignalState newState)
+void AbstractGate::setInputState(const unsigned int inputIndex, const Signal::SignalState newState)
 {
     try
     {
@@ -53,13 +53,13 @@ void AbstractLogicGate::setInputState(const unsigned int inputIndex, const Signa
 }
 
 
-Signal::SignalState AbstractLogicGate::getOutputState() const
+Signal::SignalState AbstractGate::getOutputState() const
 {
     return mOutput->getOutputState();
 }
 
 
-void AbstractLogicGate::connect(AbstractLogicGate * const otherGate,
+void AbstractGate::connect(AbstractGate * const otherGate,
                                 const unsigned int otherInputIndex)
 {
     checkConnection(otherGate, otherInputIndex);
@@ -67,34 +67,34 @@ void AbstractLogicGate::connect(AbstractLogicGate * const otherGate,
 }
 
 
-void AbstractLogicGate::disConnect(AbstractLogicGate * const otherGate,
+void AbstractGate::disConnect(AbstractGate * const otherGate,
                                    const unsigned int otherInputIndex)
 {
     checkConnection(otherGate, otherInputIndex);
     mOutput->disConnect(otherGate, otherInputIndex);
 }
 
-void AbstractLogicGate::disConnectFromDeletedGate(AbstractLogicGate * const otherGate,
+void AbstractGate::disConnectFromDeletedGate(AbstractGate * const otherGate,
                                    const unsigned int otherInputIndex)
 {
     checkConnection(otherGate, otherInputIndex);
     mOutput->disConnect(otherGate, otherInputIndex, true);
 }
 
-unsigned int AbstractLogicGate::getNumberOfInputs(void) const
+unsigned int AbstractGate::getNumberOfInputs(void) const
 {
     return mInputs.size();
 }
 
 
-void AbstractLogicGate::evaluate()
+void AbstractGate::evaluate()
 {
     mGateState = evaluateState();
     mOutput->setState(mGateState);
 }
 
 
-std::string AbstractLogicGate::toString(void) const
+std::string AbstractGate::toString(void) const
 {
     //    if(mName.empty())
     //    {
@@ -132,7 +132,7 @@ std::string AbstractLogicGate::toString(void) const
 
 
 
-void AbstractLogicGate::checkConnection(AbstractLogicGate * const otherGate,
+void AbstractGate::checkConnection(AbstractGate * const otherGate,
                                         const unsigned int otherInputIndex) const
 {
     if(!otherGate)
@@ -147,7 +147,7 @@ void AbstractLogicGate::checkConnection(AbstractLogicGate * const otherGate,
 }
 
 
-void AbstractLogicGate::connectToOutput(AbstractLogicGate * const otherGate, const unsigned int inputIndex)
+void AbstractGate::connectToOutput(AbstractGate * const otherGate, const unsigned int inputIndex)
 {
     if(!otherGate)
     {
@@ -165,7 +165,7 @@ void AbstractLogicGate::connectToOutput(AbstractLogicGate * const otherGate, con
 }
 
 
-void AbstractLogicGate::disConnectFromOutput(AbstractLogicGate * const otherGate, const unsigned int inputIndex)
+void AbstractGate::disConnectFromOutput(AbstractGate * const otherGate, const unsigned int inputIndex)
 {
     if(!otherGate)
     {

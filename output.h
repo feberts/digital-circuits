@@ -1,27 +1,27 @@
-#ifndef DIGITALOUTPUT_H
-#define DIGITALOUTPUT_H
+#ifndef OUTPUT_H
+#define OUTPUT_H
 
 #include <map>
 #include <set>
 
 #include "signal.h"
-class AbstractLogicGate;
+class AbstractGate;
 
-class DigitalOutput
+class Output
 {
     public:
 
-        DigitalOutput() = delete;
-        DigitalOutput(AbstractLogicGate * const parentGate);
+        Output() = delete;
+        Output(AbstractGate * const parentGate);
 
-        ~DigitalOutput();
+        ~Output();
 
         void setState(const Signal::SignalState newState);
         Signal::SignalState getOutputState(void) const;
 
-        void connect(AbstractLogicGate * const otherGate,
+        void connect(AbstractGate * const otherGate,
                      const unsigned int otherInputIndex);
-        void disConnect(AbstractLogicGate * const otherGate,
+        void disConnect(AbstractGate * const otherGate,
                         const unsigned int otherInputIndex,
                         const bool otherGateDeleted = false);
 
@@ -29,9 +29,9 @@ class DigitalOutput
 
         void emitOutputSignal(const Signal::SignalState signalState) const;
 
-        AbstractLogicGate * mParentGate;
+        AbstractGate * mParentGate;
         Signal::SignalState mOutputState;
-        std::map<AbstractLogicGate *, std::set<unsigned int>> mConnectionsToOtherGates;
+        std::map<AbstractGate *, std::set<unsigned int>> mConnectionsToOtherGates;
 };
 
-#endif // DIGITALOUTPUT_H
+#endif // OUTPUT_H

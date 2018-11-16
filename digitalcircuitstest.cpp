@@ -1,4 +1,4 @@
-#include "circuitstest.h"
+#include "digitalcircuitstest.h"
 
 #include <iostream>
 #include "gateand.h"
@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void CircuitsTest::testAll(void)
+void DigitalCircuitsTest::testAll(void)
 {
     testGateAND();
     testGateConnect();
@@ -24,7 +24,7 @@ void CircuitsTest::testAll(void)
 }
 
 
-bool CircuitsTest::evaluate(const bool testResult)
+bool DigitalCircuitsTest::evaluate(const bool testResult)
 {
     cout << boolalpha << testResult << endl;
 
@@ -37,7 +37,7 @@ bool CircuitsTest::evaluate(const bool testResult)
 }
 
 
-void CircuitsTest::testGateAND(void)
+void DigitalCircuitsTest::testGateAND(void)
 {
     cout << "     ===== CircuitsTest::testGateAND =====" << endl;
 
@@ -131,7 +131,7 @@ void CircuitsTest::testGateAND(void)
 }
 
 
-void CircuitsTest::testGateConnect()
+void DigitalCircuitsTest::testGateConnect()
 {
     cout << "     ===== CircuitsTest::testGateConnect =====" << endl;
 
@@ -306,7 +306,7 @@ void CircuitsTest::testGateConnect()
 }
 
 
-void CircuitsTest::testGateDisconnect()
+void DigitalCircuitsTest::testGateDisconnect()
 {
     cout << "     ===== CircuitsTest::testGateDisconnect =====" << endl;
 
@@ -431,7 +431,7 @@ void CircuitsTest::testGateDisconnect()
 }
 
 
-void CircuitsTest::testGateDelete()
+void DigitalCircuitsTest::testGateDelete()
 {
     cout << "     ===== CircuitsTest::testGateDelete =====" << endl;
 

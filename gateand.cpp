@@ -5,7 +5,7 @@ Signal::SignalState GateAND::evaluateState(void) const
 {
     Signal::SignalState newOutputState = Signal::HIGH;
 
-    for(DigitalInput const * const input : mInputs)
+    for(Input const * const input : mInputs)
     {
         if(input->getState() == Signal::LOW)
         {

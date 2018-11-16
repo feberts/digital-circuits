@@ -1,12 +1,12 @@
-#include "digitalinput.h"
+#include "input.h"
 
 #include <stdexcept>
-#include "abstractlogicgate.h"
+#include "abstractgate.h"
 
 using namespace std;
 
 
-DigitalInput::DigitalInput(AbstractLogicGate * const parentGate, const unsigned int inputIndex)
+Input::Input(AbstractGate * const parentGate, const unsigned int inputIndex)
     : mParentGate(parentGate),
       mInputState(Signal::LOW),
       mConnectionsFromOtherGates({}),
@@ -18,16 +18,16 @@ DigitalInput::DigitalInput(AbstractLogicGate * const parentGate, const unsigned 
     }
 }
 
-DigitalInput::~DigitalInput()
+Input::~Input()
 {
-    for(AbstractLogicGate * connectedGate : mConnectionsFromOtherGates)
+    for(AbstractGate * connectedGate : mConnectionsFromOtherGates)
     {
         connectedGate->disConnectFromDeletedGate(mParentGate, mInputIndex);
     }
 }
 
 
-void DigitalInput::setState(const Signal::SignalState newState)
+void Input::setState(const Signal::SignalState newState)
 {
     if(mInputState != newState)
     {
@@ -35,7 +35,7 @@ void DigitalInput::setState(const Signal::SignalState newState)
 
         if(mInputState == Signal::LOW)
         {
-            for(AbstractLogicGate * connectedGate : mConnectionsFromOtherGates)
+            for(AbstractGate * connectedGate : mConnectionsFromOtherGates)
             {
                 if(connectedGate->getOutputState() == Signal::HIGH)
                 {
@@ -49,13 +49,13 @@ void DigitalInput::setState(const Signal::SignalState newState)
 }
 
 
-Signal::SignalState DigitalInput::getState(void) const
+Signal::SignalState Input::getState(void) const
 {
     return mInputState;
 }
 
 
-void DigitalInput::connectToOutput(AbstractLogicGate * const otherGate)
+void Input::connectToOutput(AbstractGate * const otherGate)
 {
     if(!otherGate)
     {
@@ -65,7 +65,7 @@ void DigitalInput::connectToOutput(AbstractLogicGate * const otherGate)
     mConnectionsFromOtherGates.insert(otherGate);
 }
 
-void DigitalInput::disConnectFromOutput(AbstractLogicGate * const otherGate)
+void Input::disConnectFromOutput(AbstractGate * const otherGate)
 {
     if(!otherGate)
     {

@@ -1,9 +1,9 @@
-#include "circuitstest.h"
+#include "digitalcircuitstest.h"
 
 
 int main(int argc, char *argv[])
 {
-    CircuitsTest ct;
+    DigitalCircuitsTest ct;
     ct.testAll();
 
     return 0;
