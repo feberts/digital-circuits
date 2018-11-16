@@ -31,12 +31,12 @@ AbstractGate::AbstractGate(const unsigned int numberOfInputs,
 
 AbstractGate::~AbstractGate(void)
 {
-//    for(Input * input : mInputs)
-//    {
-//        delete input;
-//    }
+    for(Input * input : mInputs)
+    {
+        delete input;
+    }
 
-//    delete mOutput;
+    delete mOutput;
 }
 
 
