@@ -4,8 +4,6 @@
 
 using namespace std;
 
-//typedef pair<AbstractLogicGate *, set<unsigned int>> pairGateInputset;
-
 
 AbstractLogicGate::AbstractLogicGate(const string & name)
     : AbstractLogicGate(2, name)
