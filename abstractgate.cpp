@@ -17,15 +17,15 @@ AbstractGate::AbstractGate(const unsigned int numberOfInputs,
       mOutput(new Output),
       mGateState(Signal::LOW)
 {
-//    if(numberOfInputs < 2)
-//    {
-//        throw invalid_argument("AbstractLogicGate::AbstractLogicGate : numberOfInputs must be > 1");
-//    }
+    if(numberOfInputs < 2)
+    {
+        throw invalid_argument("AbstractLogicGate::AbstractLogicGate : numberOfInputs must be > 1");
+    }
 
-//    for(unsigned int index = 0; index < numberOfInputs; index++)
-//    {
-//        mInputs.push_back(new Input(this, index));
-//    }
+    for(unsigned int index = 0; index < numberOfInputs; index++)
+    {
+        mInputs.push_back(new Input(this));
+    }
 }
 
 
@@ -42,20 +42,20 @@ AbstractGate::~AbstractGate(void)
 
 void AbstractGate::setInputState(const unsigned int inputIndex, const Signal::SignalState newState)
 {
-//    try
-//    {
-//        mInputs.at(inputIndex)->setState(newState);
-//    }
-//    catch(out_of_range)
-//    {
-//        throw invalid_argument("AbstractLogicGate::setInput : input is an invalid index");
-//    }
+    try
+    {
+        mInputs.at(inputIndex)->setState(newState);
+    }
+    catch(out_of_range)
+    {
+        throw invalid_argument("AbstractGate::setInputState : input is an invalid index");
+    }
 }
 
 
 Signal::SignalState AbstractGate::getOutputState() const
 {
-//    return mOutput->getState();
+    return mOutput->getState();
 }
 
 
@@ -83,14 +83,14 @@ void AbstractGate::disConnectFromDeletedGate(AbstractGate * const otherGate,
 
 unsigned int AbstractGate::getNumberOfInputs(void) const
 {
-//    return mInputs.size();
+    return mInputs.size();
 }
 
 
 void AbstractGate::evaluate()
 {
-//    mGateState = evaluateState();
-//    mOutput->setState(mGateState);
+    mGateState = evaluateState();
+    mOutput->setState(mGateState);
 }
 
 
@@ -135,15 +135,15 @@ std::string AbstractGate::toString(void) const
 void AbstractGate::checkConnection(AbstractGate * const otherGate,
                                         const unsigned int otherInputIndex) const
 {
-//    if(!otherGate)
-//    {
-//        throw invalid_argument("AbstractLogicGate::checkConnection : otherGate is null");
-//    }
+    if(!otherGate)
+    {
+        throw invalid_argument("AbstractLogicGate::checkConnection : otherGate is null");
+    }
 
-//    if(otherInputIndex >= otherGate->getNumberOfInputs())
-//    {
-//        throw invalid_argument("AbstractLogicGate::checkConnection : otherInputIndex invalid, no such input");
-//    }
+    if(otherInputIndex >= otherGate->getNumberOfInputs())
+    {
+        throw invalid_argument("AbstractLogicGate::checkConnection : otherInputIndex invalid, no such input");
+    }
 }
 
 
