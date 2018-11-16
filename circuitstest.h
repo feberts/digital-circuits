@@ -8,16 +8,16 @@ class CircuitsTest
 
         CircuitsTest() = default;
 
-        void testAll(void) const;
+        void testAll(void);
 
-        void testGateAND(void) const;
-        void testGateConnect(void) const;
-        void testGateDisconnect(void) const;
-        void testGateDelete(void) const;
+        void testGateAND(void);
+        void testGateConnect(void);
+        void testGateDisconnect(void);
+        void testGateDelete(void);
 
     protected:
 
-        void evaluate(const bool testResult);
+        bool evaluate(const bool testResult);
         bool mError = false;
 };
 

@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void CircuitsTest::testAll(void) const
+void CircuitsTest::testAll(void)
 {
     testGateAND();
     testGateConnect();
@@ -24,16 +24,18 @@ void CircuitsTest::testAll(void) const
 }
 
 
-void CircuitsTest::evaluate(const bool testResult)
+bool CircuitsTest::evaluate(const bool testResult)
 {
     if(testResult == false)
     {
         mError = true;
     }
+
+    return testResult;
 }
 
 
-void CircuitsTest::testGateAND(void) const
+void CircuitsTest::testGateAND(void)
 {
     cout << "     ===== CircuitsTest::testGateAND =====" << endl;
 
@@ -42,20 +44,20 @@ void CircuitsTest::testGateAND(void) const
 
         GateAND * gateAnd = new GateAND;
 
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
 
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::HIGH) << endl;
         gateAnd->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -63,32 +65,32 @@ void CircuitsTest::testGateAND(void) const
 
         GateAND * gateAnd = new GateAND(3);
 
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
 
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::LOW);
         gateAnd->setInputState(2, Signal::LOW);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::LOW);
         gateAnd->setInputState(2, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
         gateAnd->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::HIGH) << endl;
         gateAnd->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -127,7 +129,7 @@ void CircuitsTest::testGateAND(void) const
 }
 
 
-void CircuitsTest::testGateConnect() const
+void CircuitsTest::testGateConnect()
 {
     cout << "     ===== CircuitsTest::testGateConnect =====" << endl;
 
@@ -138,36 +140,36 @@ void CircuitsTest::testGateConnect() const
         GateAND * gateAnd2 = new GateAND;
 
         gateAnd1->connect(gateAnd2, 0);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::LOW);
         gateAnd2->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(0, Signal::LOW);
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(0, Signal::LOW);
         gateAnd1->setInputState(1, Signal::LOW);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(0, Signal::LOW);
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd2->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd2->setInputState(1, Signal::HIGH);
         gateAnd1->setInputState(0, Signal::LOW);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
     }
 
     {
@@ -178,13 +180,13 @@ void CircuitsTest::testGateConnect() const
 
         gateAnd1->connect(gateAnd2, 0);
         gateAnd1->connect(gateAnd2, 1);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
         gateAnd1->setInputState(0, Signal::LOW);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -198,10 +200,10 @@ void CircuitsTest::testGateConnect() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd2->setInputState(0, Signal::LOW);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
     }
 
     {
@@ -210,14 +212,14 @@ void CircuitsTest::testGateConnect() const
         GateAND * gateAnd1 = new GateAND;
 
         gateAnd1->connect(gateAnd1, 1);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
         gateAnd1->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
     }
 
     {
@@ -229,21 +231,21 @@ void CircuitsTest::testGateConnect() const
 
         gateAnd1->connect(gateAnd3, 0);
         gateAnd2->connect(gateAnd3, 1);
-        cout << boolalpha << (gateAnd3->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd3->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(0, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd3->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd3->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd2->setInputState(0, Signal::LOW);
-        cout << boolalpha << (gateAnd3->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd3->getOutputState() == Signal::LOW) << endl;
 
         gateAnd3->connect(gateAnd2, 0);
         gateAnd2->setInputState(0, Signal::HIGH);
         gateAnd2->setInputState(0, Signal::LOW);
-        cout << boolalpha << (gateAnd3->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd3->getOutputState() == Signal::HIGH) << endl;
     }
 
     {
@@ -293,16 +295,16 @@ void CircuitsTest::testGateConnect() const
         gateAnd2->setInputState(1, Signal::HIGH);
 
         gateAnd1->connect(gateAnd3, 0);
-        cout << boolalpha << (gateAnd3->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd3->getOutputState() == Signal::LOW) << endl;
         gateAnd2->connect(gateAnd3, 1);
-        cout << boolalpha << (gateAnd3->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd3->getOutputState() == Signal::HIGH) << endl;
     }
 
     cout << "     ===== END =====" << endl;
 }
 
 
-void CircuitsTest::testGateDisconnect() const
+void CircuitsTest::testGateDisconnect()
 {
     cout << "     ===== CircuitsTest::testGateDisconnect =====" << endl;
 
@@ -317,16 +319,16 @@ void CircuitsTest::testGateDisconnect() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->disConnect(gateAnd2, 0);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->connect(gateAnd2, 1);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd2->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
     }
 
     {
@@ -337,15 +339,15 @@ void CircuitsTest::testGateDisconnect() const
 
         gateAnd1->connect(gateAnd2, 0);
         gateAnd1->connect(gateAnd2, 1);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(0, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->disConnect(gateAnd2, 0);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -354,17 +356,17 @@ void CircuitsTest::testGateDisconnect() const
         GateAND * gateAnd1 = new GateAND;
 
         gateAnd1->connect(gateAnd1, 1);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->disConnect(gateAnd1, 1);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -427,7 +429,7 @@ void CircuitsTest::testGateDisconnect() const
 }
 
 
-void CircuitsTest::testGateDelete() const
+void CircuitsTest::testGateDelete()
 {
     cout << "     ===== CircuitsTest::testGateDelete =====" << endl;
 
@@ -442,10 +444,10 @@ void CircuitsTest::testGateDelete() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         delete gateAnd1;
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -459,18 +461,18 @@ void CircuitsTest::testGateDelete() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         delete gateAnd2;
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->setInputState(0, Signal::LOW);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(1, Signal::LOW);
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
     }
 
     {
@@ -485,10 +487,10 @@ void CircuitsTest::testGateDelete() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         delete gateAnd1;
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -503,18 +505,18 @@ void CircuitsTest::testGateDelete() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         delete gateAnd2;
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->setInputState(0, Signal::LOW);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::LOW) << endl;
 
         gateAnd1->setInputState(1, Signal::LOW);
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::HIGH) << endl;
     }
 
     {
@@ -529,13 +531,13 @@ void CircuitsTest::testGateDelete() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         delete gateAnd1;
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::LOW) << endl;
     }
 
     {
@@ -550,13 +552,13 @@ void CircuitsTest::testGateDelete() const
         gateAnd1->setInputState(0, Signal::HIGH);
         gateAnd1->setInputState(1, Signal::HIGH);
         gateAnd2->setInputState(1, Signal::HIGH);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         gateAnd1->setInputState(1, Signal::LOW);
-        cout << boolalpha << (gateAnd2->getOutputState() == Signal::HIGH) << endl;
+        cout << boolalpha << evaluate(gateAnd2->getOutputState() == Signal::HIGH) << endl;
 
         delete gateAnd2;
-        cout << boolalpha << (gateAnd1->getOutputState() == Signal::LOW) << endl;
+        cout << boolalpha << evaluate(gateAnd1->getOutputState() == Signal::LOW) << endl;
     }
 
     cout << "     ===== END =====" << endl;
