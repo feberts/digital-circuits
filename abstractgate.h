@@ -2,8 +2,6 @@
 #define ABSTRACTGATE_H
 
 #include <vector>
-#include <map>
-#include <set>
 #include "abstractcomponent.h"
 #include "input.h"
 #include "output.h"
@@ -15,7 +13,7 @@ class AbstractGate : public AbstractComponent
 
         AbstractGate(const std::string & name = "");
         AbstractGate(const unsigned int numberOfInputs,
-                          const std::string & name = "");
+                     const std::string & name = "");
 
         virtual ~AbstractGate(void);
 
@@ -36,7 +34,6 @@ class AbstractGate : public AbstractComponent
 
         std::vector<Input *> mInputs;
         Output * mOutput;
-
 
         Signal::SignalState mGateState;
 };

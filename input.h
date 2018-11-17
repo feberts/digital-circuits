@@ -5,7 +5,6 @@
 #include "signal.h"
 
 class Output;
-
 class AbstractGate;
 
 
@@ -18,15 +17,13 @@ class Input
 
         ~Input(void);
 
-        void setState(const Signal::SignalState newState); // todo : protected ?
+        void setState(const Signal::SignalState newState);
         Signal::SignalState getState(void) const;
 
-        void connect(Output * const output); // todo : protected ?
-        void disconnect(Output * const output); // todo : protected ?
-
+        void connect(Output * const output);
+        void disconnect(Output * const output);
 
     protected:
-
 
         AbstractGate * mParentGate;
         Signal::SignalState mInputState;

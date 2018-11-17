@@ -25,6 +25,7 @@ Input::Input(AbstractGate * const parentGate)
     }
 }
 
+
 Input::~Input()
 {
     for(Output * output : mConnectedOutputs)
@@ -34,11 +35,34 @@ Input::~Input()
 }
 
 
+// alt
+//void Input::setState(const Signal::SignalState newState)
+//{
+//    if(mInputState != newState)
+//    {
+//        mInputState = newState;
+
+//        if(mInputState == Signal::LOW)
+//        {
+//            for(Output * const output : mConnectedOutputs)
+//            {
+//                if(output->getState() == Signal::HIGH)
+//                {
+//                    mInputState = Signal::HIGH;
+//                }
+//            }
+//        }
+
+//        if(mParentGate)
+//        {
+//            mParentGate->evaluate();
+//        }
+//    }
+//}
 
 
-
-
-void Input::setState(const Signal::SignalState newState) // todo : hier weiter
+// neu
+void Input::setState(const Signal::SignalState newState)
 {
     if(mInputState != newState)
     {
@@ -65,9 +89,6 @@ void Input::setState(const Signal::SignalState newState) // todo : hier weiter
 }
 
 
-
-
-
 Signal::SignalState Input::getState(void) const
 {
     return mInputState;
@@ -83,6 +104,8 @@ void Input::connect(Output * const output)
 
     mConnectedOutputs.insert(output);
 }
+
+
 void Input::disconnect(Output * const output)
 {
     if(!output)
@@ -91,7 +114,6 @@ void Input::disconnect(Output * const output)
     }
 
     mConnectedOutputs.erase(output);
-
 }
 
 

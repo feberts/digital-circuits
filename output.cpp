@@ -1,7 +1,6 @@
 #include "output.h"
 
 #include <stdexcept>
-#include <set>
 #include "input.h"
 
 using namespace std;
@@ -11,7 +10,6 @@ Output::Output(void)
     : mOutputState(Signal::LOW),
       mConnectedInputs({})
 { }
-
 
 
 Output::~Output()
@@ -42,16 +40,6 @@ Signal::SignalState Output::getState(void) const
 }
 
 
-
-
-void Output::emitOutputSignal(void) const
-{
-    for(Input * input : mConnectedInputs)
-    {
-        input->setState(mOutputState);
-    }
-}
-
 void Output::connect(Input * const input)
 {
     if(!input)
@@ -64,6 +52,7 @@ void Output::connect(Input * const input)
 
     emitOutputSignal();
 }
+
 
 void Output::disconnect(Input * const input)
 {
@@ -84,6 +73,7 @@ void Output::disconnect(Input * const input)
 
 }
 
+
 void Output::disconnectFromDeletedInput(Input * const input)
 {
     if(!input)
@@ -98,4 +88,13 @@ void Output::disconnectFromDeletedInput(Input * const input)
 
     mConnectedInputs.erase(input);
 
+}
+
+
+void Output::emitOutputSignal(void) const
+{
+    for(Input * input : mConnectedInputs)
+    {
+        input->setState(mOutputState);
+    }
 }

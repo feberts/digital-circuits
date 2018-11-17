@@ -11,7 +11,7 @@ AbstractGate::AbstractGate(const string & name)
 
 
 AbstractGate::AbstractGate(const unsigned int numberOfInputs,
-                                     const string & name)
+                           const string & name)
     : AbstractComponent(name),
       mInputs({}),
       mOutput(new Output),
@@ -19,7 +19,7 @@ AbstractGate::AbstractGate(const unsigned int numberOfInputs,
 {
     if(numberOfInputs < 2)
     {
-        throw invalid_argument("AbstractLogicGate::AbstractLogicGate : numberOfInputs must be > 1");
+        throw invalid_argument("AbstractGate::AbstractGate : numberOfInputs must be > 1");
     }
 
     for(unsigned int index = 0; index < numberOfInputs; index++)
@@ -60,7 +60,7 @@ Signal::SignalState AbstractGate::getOutputState() const
 
 
 void AbstractGate::connect(AbstractGate * const otherGate,
-                                const unsigned int otherInputIndex)
+                           const unsigned int otherInputIndex)
 {
     if(!otherGate)
     {
@@ -80,7 +80,7 @@ void AbstractGate::connect(AbstractGate * const otherGate,
 
 
 void AbstractGate::disConnect(AbstractGate * const otherGate,
-                                   const unsigned int otherInputIndex)
+                              const unsigned int otherInputIndex)
 {
     if(!otherGate)
     {
@@ -98,8 +98,6 @@ void AbstractGate::disConnect(AbstractGate * const otherGate,
 }
 
 
-
-
 void AbstractGate::evaluate()
 {
     mGateState = evaluateState();
@@ -109,24 +107,24 @@ void AbstractGate::evaluate()
 
 std::string AbstractGate::toString(void) const
 {
-        if(mName.empty())
-        {
-            return "";
-        }
+    if(mName.empty())
+    {
+        return "";
+    }
 
-        string retStr = "=== " + mName + " ===\n";
+    string retStr = "=== " + mName + " ===\n";
 
-        for(unsigned int index = 0; index < mInputs.size(); index++)
-        {
-            retStr += "Input[" + to_string(index) + "] : ";
-            retStr += (mInputs.at(index)->getState() == Signal::HIGH) ? "HIGH" : "LOW";
-            retStr += "\n";
-        }
+    for(unsigned int index = 0; index < mInputs.size(); index++)
+    {
+        retStr += "Input[" + to_string(index) + "] : ";
+        retStr += (mInputs.at(index)->getState() == Signal::HIGH) ? "HIGH" : "LOW";
+        retStr += "\n";
+    }
 
-        retStr += "Output : ";
-        retStr += (mGateState == Signal::HIGH) ? "HIGH" : "LOW";
+    retStr += "Output : ";
+    retStr += (mGateState == Signal::HIGH) ? "HIGH" : "LOW";
 
-        return retStr;
+    return retStr;
 }
 
 

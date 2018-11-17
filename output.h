@@ -1,10 +1,9 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
-#include <map>
 #include <set>
-
 #include "signal.h"
+
 class Input;
 
 
@@ -17,7 +16,7 @@ class Output
         ~Output();
 
         void setState(const Signal::SignalState newState);
-        Signal::SignalState getState(void) const; // todo : protected ?
+        Signal::SignalState getState(void) const;
 
         void connect(Input * const input);
         void disconnect(Input * const input);

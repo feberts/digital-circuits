@@ -203,8 +203,6 @@ void DigitalCircuitsTest::testInputsOutputs(void)
         evaluate(out2->getState() == Signal::HIGH);
         evaluate(out1->getState() == Signal::LOW);
     }
-
-    cout << "     ===== END of DigitalCircuitsTest::testInputsOutputs =====" << endl;
 }
 
 
@@ -227,8 +225,8 @@ void DigitalCircuitsTest::testGateAND(void)
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::HIGH);
         evaluate(gateAnd->getOutputState() == Signal::LOW);
-        gateAnd->setInputState(0, Signal::HIGH);cout << gateAnd->toString() << endl;
-        evaluate(gateAnd->getOutputState() == Signal::HIGH);cout << "xxxxxxxxxx" << endl;
+        gateAnd->setInputState(0, Signal::HIGH);
+        evaluate(gateAnd->getOutputState() == Signal::HIGH);
         gateAnd->setInputState(1, Signal::LOW);
         evaluate(gateAnd->getOutputState() == Signal::LOW);
     }
@@ -297,8 +295,6 @@ void DigitalCircuitsTest::testGateAND(void)
             cout << "true" << endl;
         }
     }
-
-    cout << "     ===== END of DigitalCircuitsTest::testGateAND =====" << endl;
 }
 
 
@@ -472,8 +468,6 @@ void DigitalCircuitsTest::testGateConnect()
         gateAnd2->connect(gateAnd3, 1);
         evaluate(gateAnd3->getOutputState() == Signal::HIGH);
     }
-
-    cout << "     ===== END of DigitalCircuitsTest::testGateConnect =====" << endl;
 }
 
 
@@ -597,8 +591,6 @@ void DigitalCircuitsTest::testGateDisconnect()
             cout << "true" << endl;
         }
     }
-
-    cout << "     ===== END of DigitalCircuitsTest::testGateDisconnect =====" << endl;
 }
 
 
@@ -733,6 +725,4 @@ void DigitalCircuitsTest::testGateDelete()
         delete gateAnd2;
         evaluate(gateAnd1->getOutputState() == Signal::LOW);
     }
-
-    cout << "     ===== END of DigitalCircuitsTest::testGateDelete =====" << endl;
 }
