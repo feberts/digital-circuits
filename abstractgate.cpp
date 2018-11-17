@@ -75,7 +75,6 @@ void AbstractGate::connect(AbstractGate * const otherGate,
 //    {
 //        throw invalid_argument("AbstractGate::connect : otherInputIndex invalid, no such input");
 //    }
-
 }
 
 
