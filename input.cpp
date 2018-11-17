@@ -35,7 +35,7 @@ Input::~Input()
 }
 
 
-// alt
+// Alt:
 //void Input::setState(const Signal::SignalState newState)
 //{
 //    if(mInputState != newState)
@@ -61,7 +61,7 @@ Input::~Input()
 //}
 
 
-// neu
+// Neu:
 void Input::setState(const Signal::SignalState newState)
 {
     if(mInputState != newState)
