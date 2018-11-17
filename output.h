@@ -9,6 +9,8 @@ class Input;
 
 class Output
 {
+        friend Input;
+
     public:
 
         Output(void);
@@ -16,17 +18,19 @@ class Output
         ~Output();
 
         void setState(const Signal::SignalState newState);
-        Signal::SignalState getState(void) const;
 
         void connect(Input * const input);
         void disconnect(Input * const input);
-        void disconnectFromDeletedInput(Input * const input);
 
     protected:
 
-        void emitOutputSignal(void) const;
+        void disconnectFromDeletedInput(Input * const input);
+        void disconnectCheck(Input * const input) const;
 
-        Signal::SignalState mOutputState;
+        Signal::SignalState getState(void) const;
+        void emitSignal(void) const;
+
+        Signal::SignalState mState;
         std::set<Input *> mConnectedInputs;
 };
 

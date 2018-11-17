@@ -10,23 +10,26 @@ class AbstractGate;
 
 class Input
 {
+        friend Output;
+
     public:
 
         Input(void);
-        Input(AbstractGate * const parentGate);
+        Input(AbstractGate * const parentComponent);
 
         ~Input(void);
 
-        void setState(const Signal::SignalState newState);
         Signal::SignalState getState(void) const;
+
+    protected:
+
+        void updateState(void);
 
         void connect(Output * const output);
         void disconnect(Output * const output);
 
-    protected:
-
-        AbstractGate * mParentGate;
-        Signal::SignalState mInputState;
+        AbstractGate * mParentComponent;
+        Signal::SignalState mState;
         std::set<Output *> mConnectedOutputs;
 };
 

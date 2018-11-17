@@ -7,15 +7,15 @@ using namespace std;
 
 
 Output::Output(void)
-    : mOutputState(Signal::LOW),
+    : mState(Signal::LOW),
       mConnectedInputs({})
 { }
 
 
 Output::~Output()
 {
-    mOutputState = Signal::LOW;
-    emitOutputSignal();
+    mState = Signal::LOW;
+    emitSignal();
 
     for(Input * input : mConnectedInputs)
     {
@@ -26,17 +26,11 @@ Output::~Output()
 
 void Output::setState(const Signal::SignalState newState)
 {
-    if(mOutputState != newState)
+    if(mState != newState)
     {
-        mOutputState = newState;
-        emitOutputSignal();
+        mState = newState;
+        emitSignal();
     }
-}
-
-
-Signal::SignalState Output::getState(void) const
-{
-    return mOutputState;
 }
 
 
@@ -47,54 +41,60 @@ void Output::connect(Input * const input)
         throw invalid_argument("Output::connect : input is null");
     }
 
+    if(mConnectedInputs.find(input) != mConnectedInputs.end())
+    {
+        throw invalid_argument("Output::connect : already connected to input");
+    }
+
     mConnectedInputs.insert(input);
     input->connect(this);
 
-    emitOutputSignal();
+    emitSignal();
 }
 
 
 void Output::disconnect(Input * const input)
 {
-    if(!input)
-    {
-        throw invalid_argument("Output::disconnect : input is null");
-    }
-
-    if(mConnectedInputs.find(input) == mConnectedInputs.end())
-    {
-        throw invalid_argument("Output::disconnect : not connected to input");
-    }
+    disconnectCheck(input);
 
     mConnectedInputs.erase(input);
 
     input->disconnect(this);
-    input->setState(Signal::LOW);
-
+    input->updateState();
 }
 
 
 void Output::disconnectFromDeletedInput(Input * const input)
 {
+    disconnectCheck(input);
+    mConnectedInputs.erase(input);
+}
+
+
+void Output::disconnectCheck(Input * const input) const
+{
     if(!input)
     {
-        throw invalid_argument("Output::disconnect : input is null");
+        throw invalid_argument("Output::disconnectCheck : input is null");
     }
 
     if(mConnectedInputs.find(input) == mConnectedInputs.end())
     {
-        throw invalid_argument("Output::disconnect : not connected to input");
+        throw invalid_argument("Output::disconnectCheck : not connected to input");
     }
-
-    mConnectedInputs.erase(input);
-
 }
 
 
-void Output::emitOutputSignal(void) const
+Signal::SignalState Output::getState(void) const
+{
+    return mState;
+}
+
+
+void Output::emitSignal(void) const
 {
     for(Input * input : mConnectedInputs)
     {
-        input->setState(mOutputState);
+        input->updateState();
     }
 }

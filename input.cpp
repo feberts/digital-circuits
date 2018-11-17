@@ -8,20 +8,20 @@ using namespace std;
 
 
 Input::Input(void)
-    : mParentGate(nullptr),
-      mInputState(Signal::LOW),
+    : mParentComponent(nullptr),
+      mState(Signal::LOW),
       mConnectedOutputs({})
 { }
 
 
-Input::Input(AbstractGate * const parentGate)
-    : mParentGate(parentGate),
-      mInputState(Signal::LOW),
+Input::Input(AbstractGate * const parentComponent)
+    : mParentComponent(parentComponent),
+      mState(Signal::LOW),
       mConnectedOutputs({})
 {
-    if(!mParentGate)
+    if(!mParentComponent)
     {
-        throw std::invalid_argument("Input::Input : parentGate is null");
+        throw std::invalid_argument("Input::Input : parentComponent is null");
     }
 }
 
@@ -35,63 +35,33 @@ Input::~Input()
 }
 
 
-// Alt:
-//void Input::setState(const Signal::SignalState newState)
-//{
-//    if(mInputState != newState)
-//    {
-//        mInputState = newState;
-
-//        if(mInputState == Signal::LOW)
-//        {
-//            for(Output * const output : mConnectedOutputs)
-//            {
-//                if(output->getState() == Signal::HIGH)
-//                {
-//                    mInputState = Signal::HIGH;
-//                }
-//            }
-//        }
-
-//        if(mParentGate)
-//        {
-//            mParentGate->evaluate();
-//        }
-//    }
-//}
-
-
-// Neu:
-void Input::setState(const Signal::SignalState newState)
+Signal::SignalState Input::getState(void) const
 {
-    if(mInputState != newState)
-    {
-        Signal::SignalState tempState = Signal::LOW;
-
-        for(Output * output : mConnectedOutputs)
-        {
-            if(output->getState() == Signal::HIGH)
-            {
-                tempState = Signal::HIGH;
-            }
-        }
-
-        if(mInputState != tempState)
-        {
-            mInputState = tempState;
-
-            if(mParentGate)
-            {
-                mParentGate->evaluate();
-            }
-        }
-    }
+    return mState;
 }
 
 
-Signal::SignalState Input::getState(void) const
+void Input::updateState(void)
 {
-    return mInputState;
+    Signal::SignalState newState = Signal::LOW;
+
+    for(Output * output : mConnectedOutputs)
+    {
+        if(output->getState() == Signal::HIGH)
+        {
+            newState = Signal::HIGH;
+        }
+    }
+
+    if(mState != newState)
+    {
+        mState = newState;
+
+        if(mParentComponent)
+        {
+            mParentComponent->evaluate();
+        }
+    }
 }
 
 
