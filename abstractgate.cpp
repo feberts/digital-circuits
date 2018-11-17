@@ -62,29 +62,42 @@ Signal::SignalState AbstractGate::getOutputState() const
 void AbstractGate::connect(AbstractGate * const otherGate,
                                 const unsigned int otherInputIndex)
 {
-//    checkConnection(otherGate, otherInputIndex);
-//    mOutput->connect(otherGate, otherInputIndex);
+    if(!otherGate)
+    {
+        throw invalid_argument("AbstractGate::connect : otherGate is null");
+    }
+
+    try
+    {
+        mOutput->connect(otherGate->mInputs.at(otherInputIndex));
+    }
+    catch(out_of_range)
+    {
+        throw invalid_argument("AbstractGate::connect : otherInputIndex invalid, no such input");
+    }
+
 }
 
 
 void AbstractGate::disConnect(AbstractGate * const otherGate,
                                    const unsigned int otherInputIndex)
 {
-//    checkConnection(otherGate, otherInputIndex);
-//    mOutput->disconnect(otherGate, otherInputIndex);
+    if(!otherGate)
+    {
+        throw invalid_argument("AbstractGate::disConnect : otherGate is null");
+    }
+
+    try
+    {
+        mOutput->disconnect(otherGate->mInputs.at(otherInputIndex));
+    }
+    catch(out_of_range)
+    {
+        throw invalid_argument("AbstractGate::disConnect : otherInputIndex invalid, no such input");
+    }
 }
 
-void AbstractGate::disConnectFromDeletedGate(AbstractGate * const otherGate,
-                                   const unsigned int otherInputIndex)
-{
-//    checkConnection(otherGate, otherInputIndex);
-//    mOutput->disconnect(otherGate, otherInputIndex, true);
-}
 
-unsigned int AbstractGate::getNumberOfInputs(void) const
-{
-    return mInputs.size();
-}
 
 
 void AbstractGate::evaluate()
@@ -96,88 +109,27 @@ void AbstractGate::evaluate()
 
 std::string AbstractGate::toString(void) const
 {
-    //    if(mName.empty())
-    //    {
-    //        return "";
-    //    }
+        if(mName.empty())
+        {
+            return "";
+        }
 
-    //    string retStr = "=== " + mName + " ===\n";
+        string retStr = "=== " + mName + " ===\n";
 
-    //    for(unsigned int index = 0; index < mInputs.size(); index++)
-    //    {
-    //        retStr += "Input[" + to_string(index) + "] : ";
-    //        retStr += (mInputs.at(index).getState() == Signal::HIGH) ? "HIGH" : "LOW";
-    //        retStr += "\n";
-    //    }
+        for(unsigned int index = 0; index < mInputs.size(); index++)
+        {
+            retStr += "Input[" + to_string(index) + "] : ";
+            retStr += (mInputs.at(index)->getState() == Signal::HIGH) ? "HIGH" : "LOW";
+            retStr += "\n";
+        }
 
-    //    retStr += "Output : ";
-    //    retStr += (mGateState == Signal::HIGH) ? "HIGH" : "LOW";
+        retStr += "Output : ";
+        retStr += (mGateState == Signal::HIGH) ? "HIGH" : "LOW";
 
-    //    for (auto gate = mConnectionsToOtherGates.cbegin(); gate != mConnectionsToOtherGates.cend(); ++gate)
-    //    {
-    //        retStr += "\nOutput connected to : " + gate->first->getName() + "[";
-
-    //        for (auto input = gate->second.cbegin(); input != gate->second.cend(); ++input)
-    //        {
-    //            retStr += to_string(*input) + ", ";
-    //        }
-
-    //        retStr.pop_back();
-    //        retStr.pop_back();
-    //        retStr += "]";
-    //    }
-
-    //    return retStr;
+        return retStr;
 }
 
 
 
-void AbstractGate::checkConnection(AbstractGate * const otherGate,
-                                        const unsigned int otherInputIndex) const
-{
-    if(!otherGate)
-    {
-        throw invalid_argument("AbstractLogicGate::checkConnection : otherGate is null");
-    }
-
-    if(otherInputIndex >= otherGate->getNumberOfInputs())
-    {
-        throw invalid_argument("AbstractLogicGate::checkConnection : otherInputIndex invalid, no such input");
-    }
-}
 
 
-void AbstractGate::connectToOutput(AbstractGate * const otherGate, const unsigned int inputIndex)
-{
-//    if(!otherGate)
-//    {
-//        throw invalid_argument("AbstractLogicGate::connectToOutput : otherGate is null");
-//    }
-
-//    try
-//    {
-//        mInputs.at(inputIndex)->connect(otherGate);
-//    }
-//    catch(out_of_range)
-//    {
-//        throw invalid_argument("AbstractLogicGate::connectToOutput : inputIndex is an invalid index");
-//    }
-}
-
-
-void AbstractGate::disConnectFromOutput(AbstractGate * const otherGate, const unsigned int inputIndex)
-{
-//    if(!otherGate)
-//    {
-//        throw invalid_argument("AbstractLogicGate::disConnect : otherGate is null");
-//    }
-
-//    try
-//    {
-//        mInputs.at(inputIndex)->disconnect(otherGate);
-//    }
-//    catch(out_of_range)
-//    {
-//        throw invalid_argument("AbstractLogicGate::disConnectFromOutput : inputIndex is an invalid index");
-//    }
-}

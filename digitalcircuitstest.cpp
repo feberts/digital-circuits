@@ -215,7 +215,7 @@ void DigitalCircuitsTest::testGateAND(void)
     {
         cout << "     ===== 1 =====" << endl;
 
-        GateAND * gateAnd = new GateAND;
+        GateAND * gateAnd = new GateAND("gateAnd");
 
         evaluate(gateAnd->getOutputState() == Signal::LOW);
 
@@ -227,8 +227,8 @@ void DigitalCircuitsTest::testGateAND(void)
         gateAnd->setInputState(0, Signal::LOW);
         gateAnd->setInputState(1, Signal::HIGH);
         evaluate(gateAnd->getOutputState() == Signal::LOW);
-        gateAnd->setInputState(0, Signal::HIGH);
-        evaluate(gateAnd->getOutputState() == Signal::HIGH);
+        gateAnd->setInputState(0, Signal::HIGH);cout << gateAnd->toString() << endl;
+        evaluate(gateAnd->getOutputState() == Signal::HIGH);cout << "xxxxxxxxxx" << endl;
         gateAnd->setInputState(1, Signal::LOW);
         evaluate(gateAnd->getOutputState() == Signal::LOW);
     }

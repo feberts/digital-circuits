@@ -25,26 +25,14 @@ class AbstractGate : public AbstractComponent
         void connect(AbstractGate * const otherGate, const unsigned int otherInputIndex);
         void disConnect(AbstractGate * const otherGate, const unsigned int otherInputIndex);
 
-        void disConnectFromDeletedGate(AbstractGate * const otherGate, const unsigned int otherInputIndex);
-
         void evaluate(void);
 
         virtual std::string toString(void) const override;
 
-        void connectToOutput(AbstractGate * const otherGate, const unsigned int inputIndex);
-        void disConnectFromOutput(AbstractGate * const otherGate, const unsigned int inputIndex);
 
     protected:
 
         virtual Signal::SignalState evaluateState(void) const = 0;
-
-
-        void checkConnection(AbstractGate * const otherGate,
-                             const unsigned int otherInputIndex) const;
-
-
-
-        unsigned int getNumberOfInputs(void) const;
 
         std::vector<Input *> mInputs;
         Output * mOutput;

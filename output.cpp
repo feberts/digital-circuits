@@ -76,11 +76,26 @@ void Output::disconnect(Input * const input)
     {
         throw invalid_argument("Output::disconnect : not connected to input");
     }
-    else
-    {
-        mConnectedInputs.erase(input);
 
-        input->disconnect(this); // todo : erlaubt bei zerstörung eines inputs ?
-        input->setState(Signal::LOW); // todo : erlaubt bei zerstörung eines inputs ?
+    mConnectedInputs.erase(input);
+
+    input->disconnect(this);
+    input->setState(Signal::LOW);
+
+}
+
+void Output::disconnectFromDeletedInput(Input * const input)
+{
+    if(!input)
+    {
+        throw invalid_argument("Output::disconnect : input is null");
     }
+
+    if(mConnectedInputs.find(input) == mConnectedInputs.end())
+    {
+        throw invalid_argument("Output::disconnect : not connected to input");
+    }
+
+    mConnectedInputs.erase(input);
+
 }

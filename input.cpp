@@ -29,12 +29,16 @@ Input::~Input()
 {
     for(Output * output : mConnectedOutputs)
     {
-        output->disconnect(this);
+        output->disconnectFromDeletedInput(this);
     }
 }
 
 
-void Input::setState(const Signal::SignalState newState)
+
+
+
+
+void Input::setState(const Signal::SignalState newState) // todo : hier weiter
 {
     if(mInputState != newState)
     {
@@ -61,24 +65,7 @@ void Input::setState(const Signal::SignalState newState)
 }
 
 
-//void Input::setState(const Signal::SignalState newState)
-//{
-//    if(mInputState != newState)
-//    {
-//        mInputState = Signal::LOW;
 
-//        for(Output * output : mConnectedOutputs)
-//        {
-//            if(output->getState() == Signal::HIGH)
-//            {
-//                mInputState = Signal::HIGH;
-//            }
-//        }
-
-//            mParentGate->evaluate();
-
-//    }
-//}
 
 
 Signal::SignalState Input::getState(void) const
@@ -106,3 +93,5 @@ void Input::disconnect(Output * const output)
     mConnectedOutputs.erase(output);
 
 }
+
+

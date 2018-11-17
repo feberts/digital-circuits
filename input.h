@@ -24,6 +24,7 @@ class Input
         void connect(Output * const output); // todo : protected ?
         void disconnect(Output * const output); // todo : protected ?
 
+
     protected:
 
 

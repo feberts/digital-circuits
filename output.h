@@ -21,6 +21,7 @@ class Output
 
         void connect(Input * const input);
         void disconnect(Input * const input);
+        void disconnectFromDeletedInput(Input * const input);
 
     protected:
 
