@@ -19,10 +19,15 @@ SOURCES += \
     abstractcomponent.cpp \
     gateand.cpp \
     signal.cpp \
-    abstractgate.cpp \
     digitalcircuitstest.cpp \
     input.cpp \
-    output.cpp
+    output.cpp \
+    abstractinputcomponent.cpp \
+    abstractoutputcomponent.cpp \
+    abstractiocomponent.cpp \
+    indicator.cpp \
+    signalsource.cpp \
+    abstractgate.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -33,7 +38,12 @@ HEADERS += \
     abstractcomponent.h \
     gateand.h \
     signal.h \
-    abstractgate.h \
     digitalcircuitstest.h \
     input.h \
-    output.h
+    output.h \
+    abstractinputcomponent.h \
+    abstractoutputcomponent.h \
+    abstractiocomponent.h \
+    indicator.h \
+    signalsource.h \
+    abstractgate.h

@@ -1,8 +1,8 @@
 #include "input.h"
 
 #include <stdexcept>
-#include "abstractgate.h"
 #include "output.h"
+#include "abstractinputcomponent.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ Input::Input(void)
 { }
 
 
-Input::Input(AbstractGate * const parentComponent)
+Input::Input(AbstractInputComponent * const parentComponent)
     : mParentComponent(parentComponent),
       mState(Signal::LOW),
       mConnectedOutputs({})

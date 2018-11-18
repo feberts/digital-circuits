@@ -14,10 +14,10 @@ class Output
     public:
 
         Output(void);
-
         ~Output();
 
         void setState(const Signal::SignalState newState);
+        Signal::SignalState getState(void) const;
 
         void connect(Input * const input);
         void disconnect(Input * const input);
@@ -27,7 +27,6 @@ class Output
         void disconnectFromDeletedInput(Input * const input);
         void disconnectCheck(Input * const input) const;
 
-        Signal::SignalState getState(void) const;
         void emitSignal(void) const;
 
         Signal::SignalState mState;

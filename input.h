@@ -5,7 +5,7 @@
 #include "signal.h"
 
 class Output;
-class AbstractGate;
+class AbstractInputComponent;
 
 
 class Input
@@ -15,7 +15,7 @@ class Input
     public:
 
         Input(void);
-        Input(AbstractGate * const parentComponent);
+        Input(AbstractInputComponent * const parentComponent);
 
         ~Input(void);
 
@@ -28,7 +28,7 @@ class Input
         void connect(Output * const output);
         void disconnect(Output * const output);
 
-        AbstractGate * mParentComponent;
+        AbstractInputComponent * mParentComponent;
         Signal::SignalState mState;
         std::set<Output *> mConnectedOutputs;
 };
