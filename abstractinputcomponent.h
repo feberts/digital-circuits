@@ -26,9 +26,7 @@ class AbstractInputComponent : public AbstractComponent
 
     protected:
 
-                virtual Signal::SignalState evaluateState(void) const = 0;
-//        virtual Signal::SignalState evaluateState(void) const { return Signal::LOW; } // todo
-        // ... called in 'AbstractIOComponent::evaluate'
+        virtual Signal::SignalState evaluateState(void) const = 0;
 
         std::vector<Input *> mInputs;
         Signal::SignalState mState;

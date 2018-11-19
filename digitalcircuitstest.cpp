@@ -1253,7 +1253,7 @@ void DigitalCircuitsTest::testGateDelete()
         src11->setState(Signal::LOW);
         evaluate(ind2->getState() == Signal::HIGH);
 
-        delete gateAnd1; // todo
+        delete gateAnd1;
         evaluate(ind2->getState() == Signal::LOW);
     }
 
@@ -1287,7 +1287,7 @@ void DigitalCircuitsTest::testGateDelete()
         src11->setState(Signal::LOW);
         evaluate(ind2->getState() == Signal::HIGH);
 
-        delete gateAnd2; // todo
+        delete gateAnd2;
         evaluate(ind1->getState() == Signal::LOW);
     }
 
@@ -1387,7 +1387,7 @@ void DigitalCircuitsTest::testGateDelete()
         evaluate(ind2->getState() == Signal::HIGH);
 
         src10->setState(Signal::LOW);
-        delete gateOr2; // todo
+        delete gateOr2;
         evaluate(ind1->getState() == Signal::LOW);
     }
 }

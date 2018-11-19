@@ -6,8 +6,8 @@
 
 
 class AbstractIOComponent :
-        public AbstractOutputComponent,
-        public AbstractInputComponent // todo
+        public AbstractOutputComponent, // Mind the order of construction !
+        public AbstractInputComponent // Inputs must be destructed FIRST !
 {
         using AbstractInputComponent::AbstractInputComponent;
 
