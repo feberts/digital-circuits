@@ -18,10 +18,15 @@ void DigitalCircuitsTest::testAll(void)
     // Input:
     Indicator().getState();
     Indicator().evaluate();
+    Indicator().setState(); // illegal
 
     // In/Out:
     GateAND().evaluate();
+    GateAND().getState(); // wanted
+    GateAND().setState(); // illegal
     GateOR().evaluate();
+    GateOR().getState(); // wanted
+    GateOR().setState(); // illegal
 
     testInputsOutputs();
     testIndicator();
