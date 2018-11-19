@@ -11,23 +11,6 @@ using namespace std;
 
 void DigitalCircuitsTest::testAll(void)
 {
-    // Output:
-    SignalSource().getState();
-    SignalSource().setState(1);
-
-    // Input:
-    Indicator().getState();
-    Indicator().evaluate();
-    Indicator().setState(); // illegal
-
-    // In/Out:
-    GateAND().evaluate();
-    GateAND().getState(); // wanted
-    GateAND().setState(); // illegal
-    GateOR().evaluate();
-    GateOR().getState(); // wanted
-    GateOR().setState(); // illegal
-
     testInputsOutputs();
     testIndicator();
     testSignalSource();

@@ -20,6 +20,8 @@ class AbstractInputComponent : public AbstractComponent
 
         virtual ~AbstractInputComponent(void);
 
+        Signal::SignalState getState(void) const;
+
         virtual void evaluate(void); // todo = 0
         virtual std::string toString(void) const override;
 

@@ -13,9 +13,11 @@ class AbstractIOComponent :
 
     public:
 
+        void setState(const Signal::SignalState newState) = delete;
+        using AbstractOutputComponent::getState;
+
         void evaluate(void) override;
         virtual std::string toString(void) const override;
-
 };
 
 #endif // ABSTRACTIOCOMPONENT_H

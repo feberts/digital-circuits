@@ -56,6 +56,18 @@ void AbstractOutputComponent::disconnect(AbstractInputComponent const * const in
 }
 
 
+void AbstractOutputComponent::setState(const Signal::SignalState newState)
+{
+    mOutput->setState(newState);
+}
+
+
+Signal::SignalState AbstractOutputComponent::getState(void) const
+{
+    return mOutput->getState();
+}
+
+
 std::string AbstractOutputComponent::toString(void) const
 {
     if(mName.empty())

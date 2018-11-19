@@ -19,6 +19,9 @@ class AbstractOutputComponent : public AbstractComponent
         void disconnect(AbstractInputComponent const * const inputComponent,
                         const unsigned int inputIndex = 0);
 
+        void setState(const Signal::SignalState newState);
+        Signal::SignalState getState(void) const;
+
         virtual std::string toString(void) const override;
 
     protected:

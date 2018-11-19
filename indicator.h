@@ -8,10 +8,6 @@ class Indicator : public AbstractInputComponent
 {
         using AbstractInputComponent::AbstractInputComponent;
 
-    public:
-
-        Signal::SignalState getState(void) const;
-
     protected:
 
         virtual Signal::SignalState evaluateState(void) const override;

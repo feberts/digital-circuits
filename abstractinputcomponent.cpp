@@ -42,6 +42,12 @@ AbstractInputComponent::~AbstractInputComponent(void)
 }
 
 
+Signal::SignalState AbstractInputComponent::getState(void) const
+{
+    return mState;
+}
+
+
 void AbstractInputComponent::evaluate()
 {
     mState = evaluateState();
