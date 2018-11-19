@@ -2,7 +2,6 @@
 #define ABSTRACTINPUTCOMPONENT_H
 
 #include <vector>
-#include <stdexcept>
 #include "abstractcomponent.h"
 #include "input.h"
 
@@ -21,7 +20,7 @@ class AbstractInputComponent : public AbstractComponent
 
         virtual ~AbstractInputComponent(void);
 
-        virtual void evaluate(void);
+        virtual void evaluate(void); // todo = 0
         virtual std::string toString(void) const override;
 
     protected:

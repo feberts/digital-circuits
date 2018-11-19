@@ -3,9 +3,6 @@
 #include <iostream>
 #include "gateand.h"
 #include "gateor.h"
-#include "abstractinputcomponent.h"
-#include "abstractoutputcomponent.h"
-#include "abstractiocomponent.h"
 #include "indicator.h"
 #include "signalsource.h"
 
@@ -319,6 +316,8 @@ void DigitalCircuitsTest::testInputsOutputs(void)
         in2 = nullptr;
         out2->setState(Signal::HIGH);
         out1->setState(Signal::LOW);
+
+        evaluate(true);
     }
 }
 

@@ -35,7 +35,7 @@ AbstractInputComponent::AbstractInputComponent(const unsigned int numberOfInputs
 
 AbstractInputComponent::~AbstractInputComponent(void)
 {
-    for(Input * input : mInputs)
+    for(Input const * const input : mInputs)
     {
         delete input;
     }

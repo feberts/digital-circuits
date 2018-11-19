@@ -28,7 +28,7 @@ Input::Input(AbstractInputComponent * const parentComponent)
 
 Input::~Input()
 {
-    for(Output * output : mConnectedOutputs)
+    for(Output * const output : mConnectedOutputs)
     {
         output->disconnectFromDeletedInput(this);
     }
@@ -45,7 +45,7 @@ void Input::updateState(void)
 {
     Signal::SignalState newState = Signal::LOW;
 
-    for(Output * output : mConnectedOutputs)
+    for(Output const * const output : mConnectedOutputs)
     {
         if(output->getState() == Signal::HIGH)
         {
@@ -57,7 +57,7 @@ void Input::updateState(void)
     {
         mState = newState;
 
-        if(mParentComponent)
+        if(mParentComponent) // see Input::Input
         {
             mParentComponent->evaluate();
         }

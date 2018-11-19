@@ -17,7 +17,7 @@ Output::~Output()
     mState = Signal::LOW;
     emitSignal();
 
-    for(Input * input : mConnectedInputs)
+    for(Input * const input : mConnectedInputs)
     {
         input->disconnect(this);
     }
@@ -56,7 +56,6 @@ void Output::connect(Input * const input)
 void Output::disconnect(Input * const input)
 {
     disconnectCheck(input);
-
     mConnectedInputs.erase(input);
 
     input->disconnect(this);
@@ -93,7 +92,7 @@ Signal::SignalState Output::getState(void) const
 
 void Output::emitSignal(void) const
 {
-    for(Input * input : mConnectedInputs)
+    for(Input * const input : mConnectedInputs)
     {
         input->updateState();
     }

@@ -24,7 +24,7 @@ class Output
 
     protected:
 
-        void disconnectFromDeletedInput(Input * const input);
+        void disconnectFromDeletedInput(Input * const input); // called in Input::~Input
         void disconnectCheck(Input * const input) const;
 
         void emitSignal(void) const;

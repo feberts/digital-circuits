@@ -1,7 +1,5 @@
 #include "abstractiocomponent.h"
 
-#include <string>
-
 using namespace std;
 
 

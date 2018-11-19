@@ -14,8 +14,10 @@ class AbstractOutputComponent : public AbstractComponent
         AbstractOutputComponent(const std::string & name = "");
         virtual ~AbstractOutputComponent(void);
 
-        void connect(AbstractInputComponent * const inputComponent, const unsigned int inputIndex = 0);
-        void disConnect(AbstractInputComponent * const inputComponent, const unsigned int inputIndex = 0);
+        void connect(AbstractInputComponent const * const inputComponent,
+                     const unsigned int inputIndex = 0);
+        void disConnect(AbstractInputComponent const * const inputComponent,
+                        const unsigned int inputIndex = 0);
 
         virtual std::string toString(void) const override;
 

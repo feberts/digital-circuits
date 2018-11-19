@@ -5,5 +5,5 @@ using namespace Signal;
 
 const SignalState Signal::HIGH = true;
 const SignalState Signal::LOW = false;
-const SignalState Signal::ON = true;
-const SignalState Signal::OFF = false;
+const SignalState Signal::ON = Signal::HIGH;
+const SignalState Signal::OFF = Signal::LOW;
