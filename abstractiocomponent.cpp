@@ -3,6 +3,13 @@
 using namespace std;
 
 
+void AbstractIOComponent::evaluate(void)
+{
+    mState = evaluateState();
+    mOutput->setState(mState);
+}
+
+
 std::string AbstractIOComponent::toString(void) const
 {
     if(AbstractInputComponent::mName.empty())
@@ -26,8 +33,3 @@ std::string AbstractIOComponent::toString(void) const
 }
 
 
-void AbstractIOComponent::evaluate(void)
-{
-    mState = evaluateState();
-    mOutput->setState(mState);
-}

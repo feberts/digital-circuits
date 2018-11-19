@@ -13,11 +13,9 @@ class AbstractIOComponent :
 
     public:
 
+        void evaluate(void) override;
         virtual std::string toString(void) const override;
 
-    protected:
-
-        void evaluate(void) override;
 };
 
 #endif // ABSTRACTIOCOMPONENT_H
