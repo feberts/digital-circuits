@@ -37,7 +37,7 @@ void AbstractOutputComponent::connect(AbstractInputComponent const * const input
 }
 
 
-void AbstractOutputComponent::disConnect(AbstractInputComponent const * const inputComponent,
+void AbstractOutputComponent::disconnect(AbstractInputComponent const * const inputComponent,
                                          const unsigned int inputIndex)
 {
     if(!inputComponent)

@@ -16,7 +16,7 @@ class AbstractOutputComponent : public AbstractComponent
 
         void connect(AbstractInputComponent const * const inputComponent,
                      const unsigned int inputIndex = 0);
-        void disConnect(AbstractInputComponent const * const inputComponent,
+        void disconnect(AbstractInputComponent const * const inputComponent,
                         const unsigned int inputIndex = 0);
 
         virtual std::string toString(void) const override;

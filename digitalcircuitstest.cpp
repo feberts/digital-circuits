@@ -428,7 +428,7 @@ void DigitalCircuitsTest::testSignalSourceIndicator(void)
         evaluate(ind2->getState() == Signal::ON);
         evaluate(ind1->getState() == Signal::OFF);
 
-        src2->disConnect(ind2, 1);
+        src2->disconnect(ind2, 1);
         evaluate(ind2->getState() == Signal::OFF);
 
         src2->connect(ind2, 1);
@@ -966,7 +966,7 @@ void DigitalCircuitsTest::testGateDisconnect()
         src21->setState(Signal::HIGH);
         evaluate(ind2->getState() == Signal::HIGH);
 
-        gateAnd1->disConnect(gateAnd2, 0);
+        gateAnd1->disconnect(gateAnd2, 0);
         evaluate(ind2->getState() == Signal::LOW);
         evaluate(ind1->getState() == Signal::HIGH);
 
@@ -1000,7 +1000,7 @@ void DigitalCircuitsTest::testGateDisconnect()
         src11->setState(Signal::HIGH);
         evaluate(ind2->getState() == Signal::HIGH);
 
-        gateAnd1->disConnect(gateAnd2, 0);
+        gateAnd1->disconnect(gateAnd2, 0);
         evaluate(ind2->getState() == Signal::LOW);
     }
 
@@ -1027,7 +1027,7 @@ void DigitalCircuitsTest::testGateDisconnect()
         src11->setState(Signal::LOW);
         evaluate(ind1->getState() == Signal::HIGH);
 
-        gateAnd1->disConnect(gateAnd1, 1);
+        gateAnd1->disconnect(gateAnd1, 1);
         evaluate(ind1->getState() == Signal::LOW);
     }
 
@@ -1042,7 +1042,7 @@ void DigitalCircuitsTest::testGateDisconnect()
 
         try
         {
-            gateAnd1->disConnect(gateAnd2, 2);
+            gateAnd1->disconnect(gateAnd2, 2);
             cout << "false" << endl;
         }
         catch(invalid_argument)
@@ -1050,11 +1050,11 @@ void DigitalCircuitsTest::testGateDisconnect()
             cout << "true" << endl;
         }
 
-        gateAnd1->disConnect(gateAnd2, 1);
+        gateAnd1->disconnect(gateAnd2, 1);
 
         try
         {
-            gateAnd1->disConnect(gateAnd2, 1);
+            gateAnd1->disconnect(gateAnd2, 1);
             cout << "false" << endl;
         }
         catch(invalid_argument)
@@ -1066,7 +1066,7 @@ void DigitalCircuitsTest::testGateDisconnect()
 
         try
         {
-            gateAnd1->disConnect(gateAnd3, 3);
+            gateAnd1->disconnect(gateAnd3, 3);
             cout << "false" << endl;
         }
         catch(invalid_argument)
@@ -1074,11 +1074,11 @@ void DigitalCircuitsTest::testGateDisconnect()
             cout << "true" << endl;
         }
 
-        gateAnd1->disConnect(gateAnd3, 2);
+        gateAnd1->disconnect(gateAnd3, 2);
 
         try
         {
-            gateAnd1->disConnect(gateAnd3, 2);
+            gateAnd1->disconnect(gateAnd3, 2);
             cout << "false" << endl;
         }
         catch(invalid_argument)
