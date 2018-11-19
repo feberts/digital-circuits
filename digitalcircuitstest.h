@@ -16,6 +16,7 @@ class DigitalCircuitsTest
         void testSignalSourceIndicator(void);
         void testGateAND(void);
         void testGateOR(void);
+        void testGateXOR(void);
         void testGateConnect(void);
         void testGateDisconnect(void);
         void testGateDelete(void);

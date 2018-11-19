@@ -28,7 +28,8 @@ SOURCES += \
     indicator.cpp \
     signalsource.cpp \
     abstractgate.cpp \
-    gateor.cpp
+    gateor.cpp \
+    gatexor.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -48,4 +49,5 @@ HEADERS += \
     indicator.h \
     signalsource.h \
     abstractgate.h \
-    gateor.h
+    gateor.h \
+    gatexor.h

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "gateand.h"
 #include "gateor.h"
+#include "gatexor.h"
 #include "indicator.h"
 #include "signalsource.h"
 
@@ -17,6 +18,7 @@ void DigitalCircuitsTest::testAll(void)
     testSignalSourceIndicator();
     testGateAND();
     testGateOR();
+    testGateXOR();
     testGateConnect();
     testGateDisconnect();
     testGateDelete();
@@ -686,6 +688,137 @@ void DigitalCircuitsTest::testGateOR(void)
         }
     }
 
+}
+
+
+void DigitalCircuitsTest::testGateXOR(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testGateXOR =====" << endl;
+
+    {
+        cout << "     ===== 1 =====" << endl;
+
+        GateXOR * gateXOR = new GateXOR("gateAnd");
+
+        SignalSource * src0 = new SignalSource;
+        SignalSource * src1 = new SignalSource;
+
+        evaluate(gateXOR->getState() == Signal::LOW);
+
+        src0->connect(gateXOR, 0);
+        src1->connect(gateXOR, 1);
+
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        evaluate(gateXOR->getState() == Signal::LOW); // 0
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::LOW);
+        evaluate(gateXOR->getState() == Signal::HIGH); // 1
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        evaluate(gateXOR->getState() == Signal::HIGH); // 2
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::HIGH);
+        evaluate(gateXOR->getState() == Signal::LOW); // 3
+
+        src1->setState(Signal::LOW);
+        evaluate(gateXOR->getState() == Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 2 =====" << endl;
+
+        GateXOR * gateAnd = new GateXOR(3);
+
+        SignalSource * src0 = new SignalSource;
+        SignalSource * src1 = new SignalSource;
+        SignalSource * src2 = new SignalSource;
+
+        src0->connect(gateAnd, 0);
+        src1->connect(gateAnd, 1);
+        src2->connect(gateAnd, 2);
+
+        evaluate(gateAnd->getState() == Signal::LOW);
+
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::LOW);
+        evaluate(gateAnd->getState() == Signal::LOW); // 0
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::LOW);
+        evaluate(gateAnd->getState() == Signal::HIGH); // 1
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::LOW);
+        evaluate(gateAnd->getState() == Signal::HIGH); // 2
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::LOW);
+        evaluate(gateAnd->getState() == Signal::LOW); // 3
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+        evaluate(gateAnd->getState() == Signal::HIGH); // 4
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+        evaluate(gateAnd->getState() == Signal::LOW); // 5
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::HIGH);
+        evaluate(gateAnd->getState() == Signal::LOW); // 6
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::HIGH);
+        evaluate(gateAnd->getState() == Signal::LOW); // 7
+
+        src2->setState(Signal::LOW);
+        evaluate(gateAnd->getState() == Signal::LOW);
+        src1->setState(Signal::LOW);
+        evaluate(gateAnd->getState() == Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 3 =====" << endl;
+
+        GateXOR * gateXOR1 = new GateXOR;
+        GateXOR * gateXOR2 = new GateXOR(3);
+
+        SignalSource * src1 = new SignalSource;
+        SignalSource * src2 = new SignalSource;
+
+        src1->connect(gateXOR1, 0);
+        src2->connect(gateXOR1, 1);
+
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::HIGH);
+
+        try
+        {
+            src1->connect(gateXOR1, 2);
+            cout << "false" << endl;
+        }
+        catch(invalid_argument)
+        {
+            cout << "true" << endl;
+        }
+
+        src1->connect(gateXOR2, 0);
+        src2->connect(gateXOR2, 2);
+        src2->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+
+        try
+        {
+            src2->connect(gateXOR2, 3);
+            cout << "false" << endl;
+        }
+        catch(invalid_argument)
+        {
+            cout << "true" << endl;
+        }
+    }
 }
 
 
