@@ -6,8 +6,8 @@
 
 
 class AbstractIOComponent :
-        public AbstractInputComponent,
-        public AbstractOutputComponent
+        public AbstractOutputComponent,
+        public AbstractInputComponent // todo
 {
         using AbstractInputComponent::AbstractInputComponent;
 
