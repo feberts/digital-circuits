@@ -15,7 +15,7 @@ class AbstractIOComponent :
 
         virtual std::string toString(void) const override;
 
-    private:
+    protected:
 
         void evaluate(void) override;
 };

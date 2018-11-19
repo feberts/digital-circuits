@@ -27,7 +27,8 @@ SOURCES += \
     abstractiocomponent.cpp \
     indicator.cpp \
     signalsource.cpp \
-    abstractgate.cpp
+    abstractgate.cpp \
+    gateor.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -46,4 +47,5 @@ HEADERS += \
     abstractiocomponent.h \
     indicator.h \
     signalsource.h \
-    abstractgate.h
+    abstractgate.h \
+    gateor.h

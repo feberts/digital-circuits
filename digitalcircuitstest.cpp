@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "gateand.h"
+#include "gateor.h"
 #include "abstractinputcomponent.h"
 #include "abstractoutputcomponent.h"
 #include "abstractiocomponent.h"
@@ -18,6 +19,7 @@ void DigitalCircuitsTest::testAll(void)
     testSignalSource();
     testSignalSourceIndicator();
     testGateAND();
+    testGateOR();
     testGateConnect();
     testGateDisconnect();
     testGateDelete();
@@ -550,6 +552,133 @@ void DigitalCircuitsTest::testGateAND(void)
         try
         {
             src2->connect(gateAnd2, 3);
+            cout << "false" << endl;
+        }
+        catch(invalid_argument)
+        {
+            cout << "true" << endl;
+        }
+    }
+}
+
+
+void DigitalCircuitsTest::testGateOR(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testGateOR =====" << endl;
+
+    {
+        cout << "     ===== 1 =====" << endl;
+
+        GateOR * gateOr = new GateOR("gateOr");
+
+        SignalSource * src0 = new SignalSource;
+        SignalSource * src1 = new SignalSource;
+
+        Indicator * ind = new Indicator;
+
+        gateOr->connect(ind);
+        evaluate(ind->getState() == Signal::LOW);
+
+        src0->connect(gateOr, 0);
+        src1->connect(gateOr, 1);
+
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::LOW);
+        src0->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src1->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 2 =====" << endl;
+
+        GateOR * gateOr = new GateOR(3);
+
+        SignalSource * src0 = new SignalSource;
+        SignalSource * src1 = new SignalSource;
+        SignalSource * src2 = new SignalSource;
+
+        Indicator * ind = new Indicator;
+
+        src0->connect(gateOr, 0);
+        src1->connect(gateOr, 1);
+        src2->connect(gateOr, 2);
+        gateOr->connect(ind);
+
+        evaluate(ind->getState() == Signal::LOW);
+
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::LOW);
+        src0->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+        src1->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::HIGH);
+        src0->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::HIGH);
+        src2->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 3 =====" << endl;
+
+        GateOR * gateOr1 = new GateOR;
+        GateOR * gateOr2 = new GateOR(3);
+
+        SignalSource * src1 = new SignalSource;
+        SignalSource * src2 = new SignalSource;
+
+        src1->connect(gateOr1, 0);
+        src2->connect(gateOr1, 1);
+
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::HIGH);
+
+        try
+        {
+            src1->connect(gateOr1, 2);
+            cout << "false" << endl;
+        }
+        catch(invalid_argument)
+        {
+            cout << "true" << endl;
+        }
+
+        src1->connect(gateOr2, 0);
+        src2->connect(gateOr2, 2);
+        src2->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+
+        try
+        {
+            src2->connect(gateOr2, 3);
             cout << "false" << endl;
         }
         catch(invalid_argument)
@@ -1124,12 +1253,7 @@ void DigitalCircuitsTest::testGateDelete()
         src11->setState(Signal::LOW);
         evaluate(ind2->getState() == Signal::HIGH);
 
-        // ----
-//        src10->disConnect(gateAnd1, 0);
-//        gateAnd1->disConnect(gateAnd2, 0);
-//        gateAnd2->disConnect(gateAnd1, 1);
-        // ----
-        delete gateAnd1; // todo
+//        delete gateAnd1; // todo
         evaluate(ind2->getState() == Signal::LOW);
     }
 
@@ -1163,13 +1287,7 @@ void DigitalCircuitsTest::testGateDelete()
         src11->setState(Signal::LOW);
         evaluate(ind2->getState() == Signal::HIGH);
 
-        // ----
-        gateAnd1->disConnect(gateAnd2, 0);
-//        gateAnd2->disConnect(gateAnd1, 1);
-//        src21->disConnect(gateAnd2, 1);
-//        src10->disConnect(gateAnd1, 0);
-        // ----
-        delete gateAnd2; // todo
+//        delete gateAnd2; // todo
         evaluate(ind1->getState() == Signal::LOW);
     }
 
@@ -1235,6 +1353,41 @@ void DigitalCircuitsTest::testGateDelete()
         evaluate(ind2->getState() == Signal::HIGH);
 
         delete src21;
+        evaluate(ind1->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 9 =====" << endl;
+
+        GateOR * gateOr1 = new GateOR;
+        GateOR * gateOr2 = new GateOR;
+
+        gateOr1->connect(gateOr2, 0);
+        gateOr2->connect(gateOr1, 1);
+
+        SignalSource * src10 = new SignalSource;
+        SignalSource * src11 = new SignalSource;
+        SignalSource * src21 = new SignalSource;
+        src10->connect(gateOr1, 0);
+        src11->connect(gateOr1, 1);
+        src21->connect(gateOr2, 1);
+
+        Indicator * ind2 = new Indicator;
+        gateOr2->connect(ind2);
+
+        Indicator * ind1 = new Indicator;
+        gateOr1->connect(ind1);
+
+        src10->setState(Signal::HIGH);
+        src11->setState(Signal::HIGH);
+        src21->setState(Signal::HIGH);
+        evaluate(ind2->getState() == Signal::HIGH);
+
+        src11->setState(Signal::LOW);
+        evaluate(ind2->getState() == Signal::HIGH);
+
+        src10->setState(Signal::LOW);
+//        delete gateOr2; // todo
         evaluate(ind1->getState() == Signal::LOW);
     }
 }

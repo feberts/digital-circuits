@@ -69,3 +69,5 @@ std::string AbstractInputComponent::toString(void) const
 
     return retStr;
 }
+
+

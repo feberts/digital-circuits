@@ -2,6 +2,7 @@
 #define ABSTRACTINPUTCOMPONENT_H
 
 #include <vector>
+#include <stdexcept>
 #include "abstractcomponent.h"
 #include "input.h"
 
@@ -25,7 +26,9 @@ class AbstractInputComponent : public AbstractComponent
 
     protected:
 
-        virtual Signal::SignalState evaluateState(void) const = 0;
+                virtual Signal::SignalState evaluateState(void) const = 0;
+//        virtual Signal::SignalState evaluateState(void) const { return Signal::LOW; } // todo
+        // ... called in 'AbstractIOComponent::evaluate'
 
         std::vector<Input *> mInputs;
         Signal::SignalState mState;
