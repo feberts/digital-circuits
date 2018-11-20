@@ -1,10 +1,10 @@
-#ifndef GATEOR_H
-#define GATEOR_H
+#ifndef GATEXOR_H
+#define GATEXOR_H
 
-#include "abstractgate.h"
+#include "../abstracts/abstractgate.h"
 
 
-class GateOR : public AbstractGate
+class GateXOR : public AbstractGate
 {
         using AbstractGate::AbstractGate;
 
@@ -13,4 +13,4 @@ class GateOR : public AbstractGate
         virtual Signal::SignalState evaluateState(void) const override;
 };
 
-#endif // GATEOR_H
+#endif // GATEXOR_H

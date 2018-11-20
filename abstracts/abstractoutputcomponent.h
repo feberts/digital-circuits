@@ -2,7 +2,7 @@
 #define ABSTRACTOUTPUTCOMPONENT_H
 
 #include "abstractcomponent.h"
-#include "output.h"
+#include "../pins/output.h"
 
 class AbstractInputComponent;
 

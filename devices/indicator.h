@@ -1,7 +1,7 @@
 #ifndef INDICATOR_H
 #define INDICATOR_H
 
-#include "abstractinputcomponent.h"
+#include "../abstracts/abstractinputcomponent.h"
 
 
 class Indicator : public AbstractInputComponent

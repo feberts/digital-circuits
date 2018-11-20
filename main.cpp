@@ -1,4 +1,4 @@
-#include "digitalcircuitstest.h"
+#include "./test/digitalcircuitstest.h"
 
 
 int main(int argc, char *argv[])

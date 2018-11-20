@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 #include "output.h"
-#include "abstractinputcomponent.h"
+#include "../abstracts/abstractinputcomponent.h"
 
 using namespace std;
 

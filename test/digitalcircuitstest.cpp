@@ -1,11 +1,11 @@
 #include "digitalcircuitstest.h"
 
 #include <iostream>
-#include "gateand.h"
-#include "gateor.h"
-#include "gatexor.h"
-#include "indicator.h"
-#include "signalsource.h"
+#include "../gates/gateand.h"
+#include "../gates/gateor.h"
+#include "../gates/gatexor.h"
+#include "../devices/indicator.h"
+#include "../devices/signalsource.h"
 
 using namespace std;
 

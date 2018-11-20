@@ -2,7 +2,7 @@
 #define INPUT_H
 
 #include <set>
-#include "signal.h"
+#include "../globals/signal.h"
 
 class Output;
 class AbstractInputComponent;

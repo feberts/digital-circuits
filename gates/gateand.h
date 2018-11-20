@@ -1,7 +1,7 @@
 #ifndef GATEAND_H
 #define GATEAND_H
 
-#include "abstractgate.h"
+#include "../abstracts/abstractgate.h"
 
 
 class GateAND : public AbstractGate

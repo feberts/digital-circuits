@@ -2,7 +2,7 @@
 #define OUTPUT_H
 
 #include <set>
-#include "signal.h"
+#include "../globals/signal.h"
 
 class Input;
 

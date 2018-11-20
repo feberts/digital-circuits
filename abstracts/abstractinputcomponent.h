@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "abstractcomponent.h"
-#include "input.h"
+#include "../pins/input.h"
 
 class AbstractOutputComponent;
 
