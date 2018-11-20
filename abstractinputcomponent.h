@@ -22,7 +22,7 @@ class AbstractInputComponent : public AbstractComponent
 
         Signal::SignalState getState(void) const;
 
-        virtual void evaluate(void); // todo = 0
+        virtual void evaluate(void);
         virtual std::string toString(void) const override;
 
     protected:
