@@ -8,7 +8,6 @@ class AbstractComponent
 {
     public:
 
-        AbstractComponent();
         AbstractComponent(const std::string & name);
 
         std::string getName(void) const;

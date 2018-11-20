@@ -3,11 +3,6 @@
 using namespace std;
 
 
-AbstractComponent::AbstractComponent()
-    : AbstractComponent("")
-{ }
-
-
 AbstractComponent::AbstractComponent(const string & name)
     : mName(name)
 { }

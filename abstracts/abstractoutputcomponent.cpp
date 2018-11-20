@@ -77,7 +77,7 @@ std::string AbstractOutputComponent::toString(void) const
 
     string retStr = "=== " + mName + " ===\n";
 
-    retStr += "State : ";
+    retStr += "State    : ";
     retStr += (mOutput->getState() == Signal::HIGH) ? "HIGH" : "LOW";
 
     return retStr;

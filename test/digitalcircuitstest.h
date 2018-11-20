@@ -20,6 +20,7 @@ class DigitalCircuitsTest
         void testGateConnect(void);
         void testGateDisconnect(void);
         void testGateDelete(void);
+        void testManualTests(void);
 
     protected:
 

@@ -22,6 +22,7 @@ void DigitalCircuitsTest::testAll(void)
     testGateConnect();
     testGateDisconnect();
     testGateDelete();
+    //    testManualTests();
 
     if(mError)
     {
@@ -487,6 +488,8 @@ void DigitalCircuitsTest::testGateAND(void)
 
         Indicator * ind = new Indicator;
 
+        evaluate(gateAnd->getState() == Signal::LOW);
+
         src0->connect(gateAnd, 0);
         src1->connect(gateAnd, 1);
         src2->connect(gateAnd, 2);
@@ -610,6 +613,8 @@ void DigitalCircuitsTest::testGateOR(void)
 
         Indicator * ind = new Indicator;
 
+        evaluate(gateOr->getState() == Signal::LOW);
+
         src0->connect(gateOr, 0);
         src1->connect(gateOr, 1);
         src2->connect(gateOr, 2);
@@ -691,7 +696,7 @@ void DigitalCircuitsTest::testGateOR(void)
 }
 
 
-void DigitalCircuitsTest::testGateXOR(void)
+void DigitalCircuitsTest::testGateXOR(void) // template
 {
     cout << "     ===== DigitalCircuitsTest::testGateXOR =====" << endl;
 
@@ -707,6 +712,8 @@ void DigitalCircuitsTest::testGateXOR(void)
 
         src0->connect(gateXOR, 0);
         src1->connect(gateXOR, 1);
+
+        evaluate(gateXOR->getState() == Signal::LOW);
 
         src0->setState(Signal::LOW);
         src1->setState(Signal::LOW);
@@ -733,6 +740,8 @@ void DigitalCircuitsTest::testGateXOR(void)
         SignalSource * src0 = new SignalSource;
         SignalSource * src1 = new SignalSource;
         SignalSource * src2 = new SignalSource;
+
+        evaluate(gateAnd->getState() == Signal::LOW);
 
         src0->connect(gateAnd, 0);
         src1->connect(gateAnd, 1);
@@ -1522,4 +1531,79 @@ void DigitalCircuitsTest::testGateDelete()
         delete gateOr2;
         evaluate(ind1->getState() == Signal::LOW);
     }
+}
+
+
+void DigitalCircuitsTest::testManualTests()
+{
+    cout << "     ===== DigitalCircuitsTest::testManualTests =====" << endl;
+
+    GateAND * gateAnd1 = new GateAND;
+    cout << gateAnd1->toString() << endl;
+    GateAND * gateAnd2 = new GateAND("gateAnd2");
+    cout << gateAnd2->toString() << endl;
+    GateAND * gateAnd3 = new GateAND(3);
+    cout << gateAnd3->toString() << endl;
+    GateAND * gateAnd4 = new GateAND(4, "gateAnd4");
+    cout << gateAnd4->toString() << endl;
+    //    GateAND * gateAnd5 = new GateAND(1); // exception
+
+    GateOR * gateOr1 = new GateOR;
+    cout << gateOr1->toString() << endl;
+    GateOR * gateOr2 = new GateOR("gateOr2");
+    cout << gateOr2->toString() << endl;
+    GateOR * gateOr3 = new GateOR(3);
+    cout << gateOr3->toString() << endl;
+    GateOR * gateOr4 = new GateOR(4, "gateOr4");
+    cout << gateOr4->toString() << endl;
+
+    GateXOR * gateXor1 = new GateXOR;
+    cout << gateXor1->toString() << endl;
+    GateXOR * gateXor2 = new GateXOR("gateXor2");
+    cout << gateXor2->toString() << endl;
+    GateXOR * gateXor3 = new GateXOR(3);
+    cout << gateXor3->toString() << endl;
+    GateXOR * gateXor4 = new GateXOR(4, "gateXor4");
+    cout << gateXor4->toString() << endl;
+
+
+    Indicator * ind1 = new Indicator;
+    cout << ind1->toString() << endl;
+    Indicator * ind2 = new Indicator("ind2");
+    cout << ind2->toString() << endl;
+    Indicator * ind3 = new Indicator(1);
+    cout << ind3->toString() << endl;
+    Indicator * ind4 = new Indicator(4, "ind4");
+    cout << ind4->toString() << endl;
+
+    Input * inp1 = new Input;
+    Input * inp2 = new Input(gateAnd1);
+    Input * inp3 = new Input(gateOr1);
+    Input * inp4 = new Input(ind4);
+    //    Input * inp5 = new Input(src1); // illegal
+
+
+    SignalSource * src1 = new SignalSource;
+    cout << src1->toString() << endl;
+    SignalSource * src2 = new SignalSource("src2");
+    cout << src2->toString() << endl;
+
+    cout << "##################" << endl;
+
+    src2->connect(gateAnd4);
+    src2->connect(gateOr4, 1);
+    src2->connect(gateXor4, 3);
+    src2->connect(ind4, 1);
+    src2->setState(1);
+    cout << src2->toString() << endl;
+    cout << gateAnd4->toString() << endl;
+    cout << gateOr4->toString() << endl;
+    cout << gateXor4->toString() << endl;
+    cout << ind4->toString() << endl;
+
+    //    AbstractComponent * ac = new AbstractComponent; // illegal
+    //    AbstractInputComponent * ic = new AbstractInputComponent; // illegal
+    AbstractOutputComponent * oc = new AbstractOutputComponent; // SHOULD be illegal !
+    //    AbstractIOComponent * ioc = new AbstractIOComponent; // illegal
+    //    AbstractGate * ag = new AbstractGate; // illegal
 }

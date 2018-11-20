@@ -7,17 +7,17 @@
 
 class AbstractIOComponent :
         public AbstractOutputComponent, // Mind the order of construction !
-        public AbstractInputComponent   // Inputs must be destructed FIRST !
+        public AbstractInputComponent   // 'Inputs' must be destroyed FIRST !
 {
         using AbstractInputComponent::AbstractInputComponent;
 
     public:
 
-        void setState(const Signal::SignalState newState) = delete;
+        void setState(const Signal::SignalState) = delete;
         using AbstractOutputComponent::getState;
 
-        void evaluate(void) override;
-        virtual std::string toString(void) const override;
+        virtual void evaluate(void) override;
+        using AbstractInputComponent::toString;
 };
 
 #endif // ABSTRACTIOCOMPONENT_H

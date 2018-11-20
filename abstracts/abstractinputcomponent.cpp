@@ -70,7 +70,7 @@ std::string AbstractInputComponent::toString(void) const
         retStr += "\n";
     }
 
-    retStr += "State : ";
+    retStr += "State    : ";
     retStr += (mState == Signal::HIGH) ? "HIGH" : "LOW";
 
     return retStr;
