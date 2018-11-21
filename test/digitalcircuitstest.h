@@ -18,6 +18,7 @@ class DigitalCircuitsTest
         void testGateOR(void);
         void testGateXOR(void);
         void testGateNAND(void);
+        void testGateNOT(void);
         void testGateConnect(void);
         void testGateDisconnect(void);
         void testGateDelete(void);

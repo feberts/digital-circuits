@@ -7,6 +7,7 @@
 #include "../devices/indicator.h"
 #include "../devices/signalsource.h"
 #include "../gates/gatenand.h"
+#include "../gates/gatenot.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ void DigitalCircuitsTest::testAll(void)
     testGateOR();
     testGateXOR();
     testGateNAND();
+    testGateNOT();
     testGateConnect();
     testGateDisconnect();
     testGateDelete();
@@ -969,6 +971,28 @@ void DigitalCircuitsTest::testGateNAND(void)
         {
             cout << "true" << endl;
         }
+    }
+}
+
+
+void DigitalCircuitsTest::testGateNOT(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testGateNOT =====" << endl;
+
+    {
+        cout << "     ===== 1 =====" << endl;
+
+        GateNOT * gateNOT = new GateNOT;
+
+        evaluate(gateNOT->getState() == Signal::HIGH);
+
+        SignalSource * src = new SignalSource;
+        src->connect(gateNOT);
+        evaluate(gateNOT->getState() == Signal::HIGH);
+        src->setState(Signal::HIGH);
+        evaluate(gateNOT->getState() == Signal::LOW);
+        src->disconnect(gateNOT);
+        evaluate(gateNOT->getState() == Signal::HIGH);
     }
 }
 
