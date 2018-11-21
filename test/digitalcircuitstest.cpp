@@ -460,6 +460,8 @@ void DigitalCircuitsTest::testGateAND(void)
 
         Indicator * ind = new Indicator;
 
+        evaluate(gateAnd->getState() == Signal::LOW);
+
         gateAnd->connect(ind);
         evaluate(ind->getState() == Signal::LOW);
 
@@ -582,6 +584,8 @@ void DigitalCircuitsTest::testGateOR(void)
         SignalSource * src1 = new SignalSource;
 
         Indicator * ind = new Indicator;
+
+        evaluate(gateOr->getState() == Signal::LOW);
 
         gateOr->connect(ind);
         evaluate(ind->getState() == Signal::LOW);

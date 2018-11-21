@@ -6,7 +6,11 @@
 
 class GateNAND : public AbstractGate
 {
-    using AbstractGate::AbstractGate;
+    public:
+
+        GateNAND(const std::string & name = "");
+        GateNAND(const unsigned int numberOfInputs,
+                 const std::string & name = "");
 
     protected:
 
