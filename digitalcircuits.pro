@@ -35,7 +35,8 @@ HEADERS += \
     globals/signal.h \
     pins/input.h \
     pins/output.h \
-    test/digitalcircuitstest.h
+    test/digitalcircuitstest.h \
+    gates/gatenand.h
 
 SOURCES += \
     abstracts/abstractcomponent.cpp \
@@ -52,6 +53,7 @@ SOURCES += \
     pins/input.cpp \
     pins/output.cpp \
     test/digitalcircuitstest.cpp \
-    main.cpp
+    main.cpp \
+    gates/gatenand.cpp
 
 

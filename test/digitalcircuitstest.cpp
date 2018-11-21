@@ -6,22 +6,24 @@
 #include "../gates/gatexor.h"
 #include "../devices/indicator.h"
 #include "../devices/signalsource.h"
+#include "../gates/gatenand.h"
 
 using namespace std;
 
 
 void DigitalCircuitsTest::testAll(void)
 {
-//    testInputsOutputs();
-//    testIndicator();
-//    testSignalSource();
-//    testSignalSourceIndicator();
-//    testGateAND();
-//    testGateOR();
-//    testGateXOR();
-//    testGateConnect();
-//    testGateDisconnect();
-//    testGateDelete();
+    testInputsOutputs();
+    testIndicator();
+    testSignalSource();
+    testSignalSourceIndicator();
+    testGateAND();
+    testGateOR();
+    testGateXOR();
+    testGateNAND();
+    testGateConnect();
+    testGateDisconnect();
+    testGateDelete();
     testFullAdder();
     //    testManualTests();
 
@@ -822,6 +824,141 @@ void DigitalCircuitsTest::testGateXOR(void) // template
         try
         {
             src2->connect(gateXOR2, 3);
+            cout << "false" << endl;
+        }
+        catch(invalid_argument)
+        {
+            cout << "true" << endl;
+        }
+    }
+}
+
+
+void DigitalCircuitsTest::testGateNAND(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testGateNAND =====" << endl;
+
+    {
+        cout << "     ===== 1 =====" << endl;
+
+        GateNAND * gateNAND = new GateNAND("gateNAND");
+
+        SignalSource * src0 = new SignalSource;
+        SignalSource * src1 = new SignalSource;
+
+        evaluate(gateNAND->getState() == Signal::HIGH);
+
+        src0->connect(gateNAND, 0);
+        src1->connect(gateNAND, 1);
+
+        evaluate(gateNAND->getState() == Signal::HIGH);
+
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 0
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 1
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 2
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::HIGH);
+        evaluate(gateNAND->getState() == Signal::LOW); // 3
+
+        src1->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 2 =====" << endl;
+
+        GateNAND * gateNAND = new GateNAND(3);
+
+        SignalSource * src0 = new SignalSource;
+        SignalSource * src1 = new SignalSource;
+        SignalSource * src2 = new SignalSource;
+
+        evaluate(gateNAND->getState() == Signal::HIGH);
+
+        src0->connect(gateNAND, 0);
+        src1->connect(gateNAND, 1);
+        src2->connect(gateNAND, 2);
+
+        evaluate(gateNAND->getState() == Signal::HIGH);
+
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 0
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 1
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 2
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 3
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 4
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 5
+        src0->setState(Signal::LOW);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::HIGH);
+        evaluate(gateNAND->getState() == Signal::HIGH); // 6
+        src0->setState(Signal::HIGH);
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::HIGH);
+        evaluate(gateNAND->getState() == Signal::LOW); // 7
+
+        src2->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH);
+        src1->setState(Signal::LOW);
+        evaluate(gateNAND->getState() == Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 3 =====" << endl;
+
+        GateNAND * gateNAND1 = new GateNAND;
+        GateNAND * gateNAND2 = new GateNAND(3);
+
+        SignalSource * src1 = new SignalSource;
+        SignalSource * src2 = new SignalSource;
+
+        src1->connect(gateNAND1, 0);
+        src2->connect(gateNAND1, 1);
+
+        src1->setState(Signal::HIGH);
+        src2->setState(Signal::HIGH);
+
+        try
+        {
+            src1->connect(gateNAND1, 2);
+            cout << "false" << endl;
+        }
+        catch(invalid_argument)
+        {
+            cout << "true" << endl;
+        }
+
+        src1->connect(gateNAND2, 0);
+        src2->connect(gateNAND2, 2);
+        src2->setState(Signal::LOW);
+        src2->setState(Signal::HIGH);
+
+        try
+        {
+            src2->connect(gateNAND2, 3);
             cout << "false" << endl;
         }
         catch(invalid_argument)

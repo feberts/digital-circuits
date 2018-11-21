@@ -1,11 +1,11 @@
-#include "gateor.h"
+#include "gatenand.h"
 
 
-Signal::SignalState GateOR::evaluateState(void) const
+Signal::SignalState GateNAND::evaluateState() const
 {
     for(Input const * const input : mInputs)
     {
-        if(input->getState() == Signal::HIGH)
+        if(input->getState() == Signal::LOW)
         {
             return Signal::HIGH;
         }
