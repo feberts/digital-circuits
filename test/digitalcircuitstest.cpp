@@ -12,16 +12,17 @@ using namespace std;
 
 void DigitalCircuitsTest::testAll(void)
 {
-    testInputsOutputs();
-    testIndicator();
-    testSignalSource();
-    testSignalSourceIndicator();
-    testGateAND();
-    testGateOR();
-    testGateXOR();
-    testGateConnect();
-    testGateDisconnect();
-    testGateDelete();
+//    testInputsOutputs();
+//    testIndicator();
+//    testSignalSource();
+//    testSignalSourceIndicator();
+//    testGateAND();
+//    testGateOR();
+//    testGateXOR();
+//    testGateConnect();
+//    testGateDisconnect();
+//    testGateDelete();
+    testFullAdder();
     //    testManualTests();
 
     if(mError)
@@ -1530,6 +1531,101 @@ void DigitalCircuitsTest::testGateDelete()
         src10->setState(Signal::LOW);
         delete gateOr2;
         evaluate(ind1->getState() == Signal::LOW);
+    }
+}
+
+
+void DigitalCircuitsTest::testFullAdder(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testFullAdder =====" << endl;
+
+    {
+        GateAND * and1 = new GateAND;
+        GateAND * and2 = new GateAND;
+        GateXOR * xor1 = new GateXOR;
+        GateXOR * xor2 = new GateXOR;
+        GateOR * or1 = new GateOR;
+
+        SignalSource * A = new SignalSource;
+        SignalSource * B = new SignalSource;
+        SignalSource * Cin = new SignalSource;
+
+        Indicator * S = new Indicator;
+        Indicator * Cout = new Indicator;
+
+        A->connect(xor1, 1);
+        A->connect(and2, 1);
+        B->connect(xor1, 0);
+        B->connect(and2, 0);
+        Cin->connect(xor2, 0);
+        Cin->connect(and1, 0);
+        xor1->connect(xor2, 1);
+        xor1->connect(and1, 1);
+        xor2->connect(S);
+        and1->connect(or1, 1);
+        and2->connect(or1, 0);
+        or1->connect(Cout);
+
+        // 0
+        A->setState(Signal::LOW);
+        B->setState(Signal::LOW);
+        Cin->setState(Signal::LOW);
+        evaluate(Cout->getState() == Signal::LOW);
+        evaluate(S->getState() == Signal::LOW);
+
+        // 1
+        A->setState(Signal::LOW);
+        B->setState(Signal::LOW);
+        Cin->setState(Signal::HIGH);
+        evaluate(Cout->getState() == Signal::LOW);
+        evaluate(S->getState() == Signal::HIGH);
+
+        // 2
+        A->setState(Signal::LOW);
+        B->setState(Signal::HIGH);
+        Cin->setState(Signal::LOW);
+        evaluate(Cout->getState() == Signal::LOW);
+        evaluate(S->getState() == Signal::HIGH);
+
+        // 3
+        A->setState(Signal::LOW);
+        B->setState(Signal::HIGH);
+        Cin->setState(Signal::HIGH);
+        evaluate(Cout->getState() == Signal::HIGH);
+        evaluate(S->getState() == Signal::LOW);
+
+        // 4
+        A->setState(Signal::HIGH);
+        B->setState(Signal::LOW);
+        Cin->setState(Signal::LOW);
+        evaluate(Cout->getState() == Signal::LOW);
+        evaluate(S->getState() == Signal::HIGH);
+
+        // 5
+        A->setState(Signal::HIGH);
+        B->setState(Signal::LOW);
+        Cin->setState(Signal::HIGH);
+        evaluate(Cout->getState() == Signal::HIGH);
+        evaluate(S->getState() == Signal::LOW);
+
+        // 6
+        A->setState(Signal::HIGH);
+        B->setState(Signal::HIGH);
+        Cin->setState(Signal::LOW);
+        evaluate(Cout->getState() == Signal::HIGH);
+        evaluate(S->getState() == Signal::LOW);
+
+        // 7
+        A->setState(Signal::HIGH);
+        B->setState(Signal::HIGH);
+        Cin->setState(Signal::HIGH);
+        evaluate(Cout->getState() == Signal::HIGH);
+        evaluate(S->getState() == Signal::HIGH);
+
+        B->setState(Signal::LOW);
+        Cin->setState(Signal::LOW);
+        evaluate(Cout->getState() == Signal::LOW);
+        evaluate(S->getState() == Signal::HIGH);
     }
 }
 
