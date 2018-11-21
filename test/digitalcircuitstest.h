@@ -23,6 +23,7 @@ class DigitalCircuitsTest
         void testGateDisconnect(void);
         void testGateDelete(void);
         void testFullAdder(void);
+        void testNBitFullAdder(void);
         void testManualTests(void);
 
     protected:

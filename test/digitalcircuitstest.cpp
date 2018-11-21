@@ -27,6 +27,7 @@ void DigitalCircuitsTest::testAll(void)
     testGateDisconnect();
     testGateDelete();
     testFullAdder();
+    testNBitFullAdder();
     //    testManualTests();
 
     if(mError)
@@ -1791,6 +1792,152 @@ void DigitalCircuitsTest::testFullAdder(void)
         Cin->setState(Signal::LOW);
         evaluate(Cout->getState() == Signal::LOW);
         evaluate(S->getState() == Signal::HIGH);
+    }
+}
+
+
+void DigitalCircuitsTest::testNBitFullAdder(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testNBitFullAdder =====" << endl;
+
+    {
+        vector<SignalSource *> registerA;
+        vector<SignalSource *> registerB;
+        vector<Indicator *> registerS;
+
+        SignalSource * A = new SignalSource;
+        SignalSource * B = new SignalSource;
+        Indicator * S = new Indicator;
+
+        GateAND * and1 = new GateAND;
+        GateAND * and2 = new GateAND;
+        GateXOR * xor1 = new GateXOR;
+        GateXOR * xor2 = new GateXOR;
+        GateOR * or1 = new GateOR;
+        GateOR * or1_old = or1;
+
+        registerA.push_back(A);
+        registerB.push_back(B);
+        registerS.push_back(S);
+
+        A->connect(xor1, 1);
+        A->connect(and2, 1);
+        B->connect(xor1, 0);
+        B->connect(and2, 0);
+        xor1->connect(xor2, 1);
+        xor1->connect(and1, 1);
+        xor2->connect(S);
+        and1->connect(or1, 1);
+        and2->connect(or1, 0);
+
+        for(unsigned int nbit = 0; nbit < 2; nbit++)
+        {
+            and1 = new GateAND;
+            and2 = new GateAND;
+            xor1 = new GateXOR;
+            xor2 = new GateXOR;
+            or1 = new GateOR;
+
+            A = new SignalSource;
+            B = new SignalSource;
+            S = new Indicator;
+
+            registerA.push_back(A);
+            registerB.push_back(B);
+            registerS.push_back(S);
+
+            A->connect(xor1, 1);
+            A->connect(and2, 1);
+            B->connect(xor1, 0);
+            B->connect(and2, 0);
+            or1_old->connect(xor2, 0);
+            or1_old->connect(and1, 0);
+            xor1->connect(xor2, 1);
+            xor1->connect(and1, 1);
+            xor2->connect(S);
+            and1->connect(or1, 1);
+            and2->connect(or1, 0);
+
+            or1_old = or1;
+        }
+
+        Indicator * Cout = new Indicator;
+        or1->connect(Cout);
+
+        // Test 1
+        registerA.at(0)->setState(Signal::HIGH);
+        registerA.at(1)->setState(Signal::LOW);
+        registerA.at(2)->setState(Signal::LOW);
+
+        registerB.at(0)->setState(Signal::LOW);
+        registerB.at(1)->setState(Signal::HIGH);
+        registerB.at(2)->setState(Signal::LOW);
+
+        evaluate(registerS.at(0)->getState() == Signal::HIGH);
+        evaluate(registerS.at(1)->getState() == Signal::HIGH);
+        evaluate(registerS.at(2)->getState() == Signal::LOW);
+
+        evaluate(Cout->getState() == Signal::LOW);
+
+        // Test 2
+        registerA.at(0)->setState(Signal::LOW);
+        registerA.at(1)->setState(Signal::LOW);
+        registerA.at(2)->setState(Signal::LOW);
+
+        registerB.at(0)->setState(Signal::LOW);
+        registerB.at(1)->setState(Signal::LOW);
+        registerB.at(2)->setState(Signal::LOW);
+
+        evaluate(registerS.at(0)->getState() == Signal::LOW);
+        evaluate(registerS.at(1)->getState() == Signal::LOW);
+        evaluate(registerS.at(2)->getState() == Signal::LOW);
+
+        evaluate(Cout->getState() == Signal::LOW);
+
+        // Test 3
+        registerA.at(0)->setState(Signal::HIGH);
+        registerA.at(1)->setState(Signal::HIGH);
+        registerA.at(2)->setState(Signal::HIGH);
+
+        registerB.at(0)->setState(Signal::HIGH);
+        registerB.at(1)->setState(Signal::HIGH);
+        registerB.at(2)->setState(Signal::HIGH);
+
+        evaluate(registerS.at(0)->getState() == Signal::LOW);
+        evaluate(registerS.at(1)->getState() == Signal::HIGH);
+        evaluate(registerS.at(2)->getState() == Signal::HIGH);
+
+        evaluate(Cout->getState() == Signal::HIGH);
+
+        // Test 4
+        registerA.at(0)->setState(Signal::HIGH);
+        registerA.at(1)->setState(Signal::HIGH);
+        registerA.at(2)->setState(Signal::LOW);
+
+        registerB.at(0)->setState(Signal::LOW);
+        registerB.at(1)->setState(Signal::LOW);
+        registerB.at(2)->setState(Signal::HIGH);
+
+        evaluate(registerS.at(0)->getState() == Signal::HIGH);
+        evaluate(registerS.at(1)->getState() == Signal::HIGH);
+        evaluate(registerS.at(2)->getState() == Signal::HIGH);
+
+        evaluate(Cout->getState() == Signal::LOW);
+
+        // Test 5
+        registerA.at(0)->setState(Signal::HIGH);
+        registerA.at(1)->setState(Signal::HIGH);
+        registerA.at(2)->setState(Signal::LOW);
+
+        registerB.at(0)->setState(Signal::HIGH);
+        registerB.at(1)->setState(Signal::LOW);
+        registerB.at(2)->setState(Signal::HIGH);
+
+        evaluate(registerS.at(0)->getState() == Signal::LOW);
+        evaluate(registerS.at(1)->getState() == Signal::LOW);
+        evaluate(registerS.at(2)->getState() == Signal::LOW);
+
+        evaluate(Cout->getState() == Signal::HIGH);
     }
 }
 
