@@ -23,7 +23,9 @@ class DigitalCircuitsTest
         void testGateDisconnect(void);
         void testGateDelete(void);
         void testFullAdder(void);
+        void testSwitch(void);
         void testNBitFullAdder(void);
+        void testUnstableCircuits(void);
         void testManualTests(void);
 
     protected:

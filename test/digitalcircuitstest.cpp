@@ -8,6 +8,7 @@
 #include "../devices/signalsource.h"
 #include "../gates/gatenand.h"
 #include "../gates/gatenot.h"
+#include "../devices/switch.h"
 
 using namespace std;
 
@@ -27,7 +28,9 @@ void DigitalCircuitsTest::testAll(void)
     testGateDisconnect();
     testGateDelete();
     testFullAdder();
+    testSwitch();
     testNBitFullAdder();
+    testUnstableCircuits();
     //    testManualTests();
 
     if(mError)
@@ -1796,6 +1799,96 @@ void DigitalCircuitsTest::testFullAdder(void)
 }
 
 
+void DigitalCircuitsTest::testSwitch(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testSwitch =====" << endl;
+
+    {
+        cout << "     ===== 1 =====" << endl;
+
+        SignalSource * src = new SignalSource;
+        Switch * sw = new Switch;
+        Indicator * ind = new Indicator;
+
+        evaluate(sw->getState() == Signal::LOW);
+
+        sw->toogle(Signal::ON);
+        evaluate(sw->getState() == Signal::LOW);
+
+        sw->toogle(Signal::OFF);
+        src->connect(sw);
+        sw->connect(ind);
+        evaluate(ind->getState() == Signal::LOW);
+
+        src->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::LOW);
+        evaluate(sw->getState() == Signal::LOW);
+
+        sw->toogle(Signal::ON);
+        evaluate(ind->getState() == Signal::HIGH);
+        evaluate(sw->getState() == Signal::HIGH);
+
+        sw->toogle(Signal::OFF);
+        evaluate(ind->getState() == Signal::LOW);
+        evaluate(sw->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 2 =====" << endl;
+
+        SignalSource * src = new SignalSource;
+        Switch * sw = new Switch;
+        Indicator * ind = new Indicator;
+
+        sw->toogle(Signal::ON);
+        src->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::LOW);
+
+        src->connect(sw);
+        sw->connect(ind);
+        evaluate(ind->getState() == Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 3 =====" << endl;
+
+        SignalSource * src = new SignalSource;
+        Switch * sw = new Switch;
+        Indicator * ind = new Indicator;
+
+        sw->toogle(Signal::ON);
+        src->setState(Signal::LOW);
+        evaluate(ind->getState() == Signal::LOW);
+
+        src->connect(sw);
+        sw->connect(ind);
+        evaluate(ind->getState() == Signal::LOW);
+
+        src->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 4 =====" << endl;
+
+        SignalSource * src = new SignalSource;
+        Switch * sw = new Switch;
+        Indicator * ind = new Indicator;
+
+        sw->toogle(Signal::OFF);
+        src->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::LOW);
+
+        src->connect(sw);
+        sw->connect(ind);
+        evaluate(ind->getState() == Signal::LOW);
+
+        sw->toogle(Signal::ON);
+        evaluate(ind->getState() == Signal::HIGH);
+    }
+}
+
+
 void DigitalCircuitsTest::testNBitFullAdder(void)
 {
     cout << "     ===== DigitalCircuitsTest::testNBitFullAdder =====" << endl;
@@ -1938,6 +2031,24 @@ void DigitalCircuitsTest::testNBitFullAdder(void)
         evaluate(registerS.at(2)->getState() == Signal::LOW);
 
         evaluate(Cout->getState() == Signal::HIGH);
+    }
+}
+
+
+void DigitalCircuitsTest::testUnstableCircuits(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testUnstableCircuits =====" << endl;
+
+    {
+        GateXOR * gateXor = new GateXOR;
+        SignalSource * src = new SignalSource;
+        Indicator * ind = new Indicator;
+
+        src->connect(gateXor, 0);
+        gateXor->connect(ind);
+        gateXor->connect(gateXor, 1);
+
+//        src->setState(Signal::HIGH);
     }
 }
 

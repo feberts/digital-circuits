@@ -37,7 +37,8 @@ HEADERS += \
     pins/output.h \
     test/digitalcircuitstest.h \
     gates/gatenand.h \
-    gates/gatenot.h
+    gates/gatenot.h \
+    devices/switch.h
 
 SOURCES += \
     abstracts/abstractcomponent.cpp \
@@ -56,6 +57,7 @@ SOURCES += \
     test/digitalcircuitstest.cpp \
     main.cpp \
     gates/gatenand.cpp \
-    gates/gatenot.cpp
+    gates/gatenot.cpp \
+    devices/switch.cpp
 
 
