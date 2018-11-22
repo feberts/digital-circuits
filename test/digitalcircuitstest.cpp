@@ -9,6 +9,7 @@
 #include "../gates/gatenand.h"
 #include "../gates/gatenot.h"
 #include "../devices/switch.h"
+#include "../devices/pushbutton.h"
 
 using namespace std;
 
@@ -29,8 +30,9 @@ void DigitalCircuitsTest::testAll(void)
     testGateDelete();
     testFullAdder();
     testSwitch();
+    testPushButton();
     testNBitFullAdder();
-    testUnstableCircuits();
+    //    testUnstableCircuits();
     //    testManualTests();
 
     if(mError)
@@ -1889,6 +1891,79 @@ void DigitalCircuitsTest::testSwitch(void)
 }
 
 
+void DigitalCircuitsTest::testPushButton(void)
+{
+    cout << "     ===== DigitalCircuitsTest::testPushButton =====" << endl;
+
+    {
+        cout << "     ===== 1 =====" << endl;
+
+        SignalSource * src = new SignalSource;
+        PushButton * pb = new PushButton;
+        Indicator * indAnd = new Indicator;
+        Indicator * indPb = new Indicator;
+        GateAND * gateAnd = new GateAND;
+
+        src->connect(gateAnd, 0);
+        src->connect(pb);
+        pb->connect(gateAnd, 1);
+        gateAnd->connect(gateAnd, 1);
+        gateAnd->connect(indAnd);
+        pb->connect(indPb);
+
+        src->setState(Signal::HIGH);
+
+        evaluate(indAnd->getState() == Signal::LOW);
+        evaluate(indPb->getState() == Signal::LOW);
+
+        pb->push();
+
+        evaluate(indAnd->getState() == Signal::HIGH);
+        evaluate(indPb->getState() == Signal::LOW);
+    }
+
+    {
+        cout << "     ===== 2 =====" << endl;
+
+        // latching
+
+        SignalSource * src = new SignalSource;
+        PushButton * pbOn = new PushButton;
+        PushButton * pbOff = new PushButton;
+        Indicator * indAnd = new Indicator;
+        Indicator * indPb = new Indicator;
+        GateAND * gateAnd = new GateAND;
+        GateXOR * gateXor = new GateXOR;
+
+        src->connect(gateXor, 1);
+        src->connect(pbOn);
+        src->connect(pbOff);
+        pbOn->connect(gateAnd, 1);
+        gateAnd->connect(gateAnd, 1);
+        gateAnd->connect(indAnd);
+        gateXor->connect(gateAnd, 0);
+        pbOn->connect(indPb);
+        pbOff->connect(indPb);
+        pbOff->connect(gateXor, 0);
+
+        src->setState(Signal::HIGH);
+
+        evaluate(indAnd->getState() == Signal::LOW);
+        evaluate(indPb->getState() == Signal::LOW);
+
+        pbOn->push();
+
+        evaluate(indAnd->getState() == Signal::HIGH);
+        evaluate(indPb->getState() == Signal::LOW);
+
+        pbOff->push();
+
+        evaluate(indAnd->getState() == Signal::LOW);
+        evaluate(indPb->getState() == Signal::LOW);
+    }
+}
+
+
 void DigitalCircuitsTest::testNBitFullAdder(void)
 {
     cout << "     ===== DigitalCircuitsTest::testNBitFullAdder =====" << endl;
@@ -2039,7 +2114,13 @@ void DigitalCircuitsTest::testUnstableCircuits(void)
 {
     cout << "     ===== DigitalCircuitsTest::testUnstableCircuits =====" << endl;
 
+    // unstable circuits causing a continuous cycle of evaluation
+
     {
+        cout << "     ===== 1 =====" << endl;
+
+        // oscillator
+
         GateXOR * gateXor = new GateXOR;
         SignalSource * src = new SignalSource;
         Indicator * ind = new Indicator;
@@ -2048,7 +2129,37 @@ void DigitalCircuitsTest::testUnstableCircuits(void)
         gateXor->connect(ind);
         gateXor->connect(gateXor, 1);
 
-//        src->setState(Signal::HIGH);
+        src->setState(Signal::HIGH);
+    }
+
+    {
+        cout << "     ===== 2 =====" << endl;
+
+        // latching
+
+        SignalSource * src = new SignalSource;
+        Switch * pb = new Switch;
+        GateAND * gateAnd = new GateAND;
+        GateXOR * gateXor = new GateXOR;
+        Indicator * ind = new Indicator;
+
+        src->connect(gateAnd, 0);
+        src->connect(pb);
+        pb->connect(gateXor, 0);
+        gateXor->connect(gateAnd, 1);
+        gateAnd->connect(gateXor, 1);
+        gateAnd->connect(ind);
+
+        src->setState(Signal::HIGH);
+        evaluate(ind->getState() == Signal::LOW);
+
+        pb->toogle(Signal::ON); // simulating a push button
+        pb->toogle(Signal::OFF); // ...
+        evaluate(ind->getState() == Signal::HIGH);
+
+        pb->toogle(Signal::ON); // simulating a push button
+        pb->toogle(Signal::OFF); // ...
+        evaluate(ind->getState() == Signal::LOW);
     }
 }
 
