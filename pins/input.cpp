@@ -59,7 +59,9 @@ void Input::updateState(void)
 
         if(mParentComponent) // see Input::Input
         {
+#ifdef EVALUATE_IMMEDIATELY
             mParentComponent->evaluate();
+#endif
         }
     }
 }

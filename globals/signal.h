@@ -1,6 +1,8 @@
 #ifndef SIGNAL_H
 #define SIGNAL_H
 
+#define EVALUATE_IMMEDIATELY // call evaluate() automatically
+
 
 namespace Signal
 {

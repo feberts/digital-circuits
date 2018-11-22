@@ -32,7 +32,9 @@ void DigitalCircuitsTest::testAll(void)
     testSwitch();
     testPushButton();
     testNBitFullAdder();
-    //    testUnstableCircuits();
+#ifndef EVALUATE_IMMEDIATELY
+    testUnstableCircuits();
+#endif
     //    testManualTests();
 
     if(mError)
@@ -708,6 +710,41 @@ void DigitalCircuitsTest::testGateOR(void)
         }
     }
 
+    {
+        cout << "     ===== 4 =====" << endl;
+
+        // manual call of evaluate()
+
+        GateOR * gateOr = new GateOR("gateOr");
+
+        SignalSource * src0 = new SignalSource;
+        SignalSource * src1 = new SignalSource;
+
+        Indicator * ind = new Indicator;
+
+        gateOr->connect(ind);
+        src0->connect(gateOr, 0);
+        src1->connect(gateOr, 1);
+
+        gateOr->evaluate();
+        ind->evaluate();
+        evaluate(ind->getState() == Signal::LOW);
+
+        src0->setState(Signal::HIGH);
+        gateOr->evaluate();
+        ind->evaluate();
+        evaluate(ind->getState() == Signal::HIGH);
+
+        src0->setState(Signal::LOW);
+        gateOr->evaluate();
+        ind->evaluate();
+        evaluate(ind->getState() == Signal::LOW);
+
+        src1->setState(Signal::HIGH);
+        gateOr->evaluate();
+        ind->evaluate();
+        evaluate(ind->getState() == Signal::HIGH);
+    }
 }
 
 
@@ -1998,7 +2035,7 @@ void DigitalCircuitsTest::testNBitFullAdder(void)
         and1->connect(or1, 1);
         and2->connect(or1, 0);
 
-        for(unsigned int nbit = 0; nbit < 2; nbit++)
+        for(unsigned int nbit = 1; nbit < 3; nbit++)
         {
             and1 = new GateAND;
             and2 = new GateAND;
@@ -2138,7 +2175,7 @@ void DigitalCircuitsTest::testUnstableCircuits(void)
         // latching
 
         SignalSource * src = new SignalSource;
-        Switch * pb = new Switch;
+        PushButton * pb = new PushButton;
         GateAND * gateAnd = new GateAND;
         GateXOR * gateXor = new GateXOR;
         Indicator * ind = new Indicator;
@@ -2153,12 +2190,10 @@ void DigitalCircuitsTest::testUnstableCircuits(void)
         src->setState(Signal::HIGH);
         evaluate(ind->getState() == Signal::LOW);
 
-        pb->toogle(Signal::ON); // simulating a push button
-        pb->toogle(Signal::OFF); // ...
+        pb->push();
         evaluate(ind->getState() == Signal::HIGH);
 
-        pb->toogle(Signal::ON); // simulating a push button
-        pb->toogle(Signal::OFF); // ...
+        pb->push();
         evaluate(ind->getState() == Signal::LOW);
     }
 }
